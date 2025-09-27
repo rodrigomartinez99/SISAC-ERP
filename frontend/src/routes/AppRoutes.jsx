@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from '../features/employees/pages/LoginPage.jsx';
-import SignupPage from '../features/employees/pages/SignupPage.jsx'; // Importa el nuevo componente
+import SignupPage from '../features/employees/pages/SignupPage.jsx';
 import DashboardPage from '../features/employees/pages/DashboardPage.jsx';
+import EditProfilePage from '../features/employees/pages/EditProfilePage.jsx';
 
 const PrivateRoute = ({ children, isAuthenticated }) => {
     return isAuthenticated ? children : <Navigate to="/login" />;
@@ -10,28 +11,52 @@ const PrivateRoute = ({ children, isAuthenticated }) => {
 
 export default function AppRoutes() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [user, setUser] = useState(null);
 
     const handleLogin = () => {
         setIsLoggedIn(true);
+
+        // ** COMENTARIO: Lógica de prueba para guardar los datos del usuario "admin" **
+        // En un escenario real, esta información vendría del backend
+        setUser({
+            firstName: 'Usuario',
+            lastName: 'Prueba',
+            email: 'usuario.prueba@fontec.com',
+            phone: '999-999-999',
+            jobTitle: 'Administrador'
+        });
+        // ** FIN COMENTARIO **
+    };
+
+    const handleLogout = () => {
+        setIsLoggedIn(false);
+        setUser(null);
     };
 
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
-                <Route path="/signup" element={<SignupPage />} /> {/* Nueva ruta para registro */}
+                <Route path="/signup" element={<SignupPage />} />
                 
-                {/* Ruta protegida para el dashboard */}
                 <Route
                     path="/dashboard"
                     element={
                         <PrivateRoute isAuthenticated={isLoggedIn}>
-                            <DashboardPage />
+                            <DashboardPage user={user} onLogout={handleLogout} />
                         </PrivateRoute>
                     }
                 />
                 
-                {/* Redirecciona a /login si la ruta no existe */}
+                <Route
+                    path="/dashboard/edit-profile"
+                    element={
+                        <PrivateRoute isAuthenticated={isLoggedIn}>
+                            <EditProfilePage user={user} setUser={setUser} />
+                        </PrivateRoute>
+                    }
+                />
+
                 <Route path="*" element={<Navigate to="/login" />} />
             </Routes>
         </BrowserRouter>
