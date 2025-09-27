@@ -10,13 +10,13 @@ const Sidebar = () => {
                         <Link to="/dashboard">Dashboard</Link>
                     </li>
                     <li>
-                        <Link to="/employees/tributaria">Admin. Tributaria</Link>
+                        <Link to="/dashboard">Admin. Tributaria</Link>
                     </li>
                     <li>
-                        <Link to="/employees/planillas">Pago de Planillas</Link>
+                        <Link to="/dashboard">Pago de Planillas</Link>
                     </li>
                     <li>
-                        <Link to="/employees/contratacion">Contratación de Personal</Link>
+                        <Link to="/dashboard">Contratación de Personal</Link>
                     </li>
                 </ul>
             </nav>

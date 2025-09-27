@@ -29,15 +29,15 @@ const Navbar = ({ user, onLogout }) => {
                 <span className="user-name">
                     {user?.firstName} {user?.lastName}
                 </span>
-                
-                {/* Contenedor del avatar y menú */}
+
+                {/* Contenedor del avatar y menú con lógica mejorada */}
                 <div
                     className="profile-container"
                     onMouseEnter={() => setShowProfileMenu(true)}
                     onMouseLeave={() => setShowProfileMenu(false)}
                 >
                     <img
-                        src="/src/assets/images/avatar.jpg"
+                        src={user?.profilePic || "/src/assets/images/default-avatar.png"}
                         alt="Perfil"
                         className="profile-mini"
                     />
