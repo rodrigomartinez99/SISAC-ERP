@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import '@/features/employees/styles/Login.css';
-import Input from '@/components/common/Input.jsx'; // Importa el componente Input
-import Button from '@/components/common/Button.jsx'; // Importa el componente Button
+import '@styles_e/Login.css';
+import Input from '@common/Input.jsx'; // Importa el componente Input
+import Button from '@common/Button.jsx'; // Importa el componente Button
 
 const SignupPage = () => {
     const navigate = useNavigate();

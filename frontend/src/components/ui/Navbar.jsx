@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import NotificationBell from '../../features/employees/components/NotificationBell.jsx'; // Importamos el nuevo componente
+import NotificationBell from '@components/NotificationBell.jsx'; // Importamos el nuevo componente
 
 const Navbar = ({ user, onLogout }) => {
     const [showProfileMenu, setShowProfileMenu] = useState(false);
