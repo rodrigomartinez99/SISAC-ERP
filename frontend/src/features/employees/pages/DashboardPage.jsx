@@ -1,14 +1,14 @@
 import React from 'react';
-import Sidebar from '../../../components/ui/SideBar.jsx';
+import Sidebar from '../../../components/ui/Sidebar.jsx';
 import Navbar from '../../../components/ui/Navbar.jsx';
 import '../styles/DashboardPage.css';
 
-const DashboardPage = () => {
+const DashboardPage = ({ user, onLogout }) => {
     return (
         <div className="dashboard-layout">
             <Sidebar />
             <div className="main-content">
-                <Navbar />
+                <Navbar user={user} onLogout={onLogout} />
                 <div className="dashboard-content">
                     <h1>Bienvenido al Dashboard de SISAC</h1>
                     <p>Aquí se visualizarán las métricas y herramientas para los empleados de FONTEC.</p>
