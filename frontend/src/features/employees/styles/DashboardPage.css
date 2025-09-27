@@ -73,3 +73,32 @@
     padding: 20px;
     background-color: #fff;
 }
+
+.profile-container {
+    position: relative;
+    cursor: pointer;
+    /* Agregamos más espacio para que el menú no desaparezca rápido */
+    padding: 10px;
+    margin-right: -10px; /* Compensa el padding para mantener el diseño */
+}
+
+/* El menú debe estar muy cerca del contenedor */
+.profile-menu {
+    position: absolute;
+    top: 50px; /* Asegura que no haya espacio entre el avatar y el menú */
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    padding: 10px;
+    z-index: 10;
+    min-width: 150px;
+}
+
+@media (max-width: 768px) {
+    .profile-menu {
+        top: 40px;
+        right: 0;
+    }
+}

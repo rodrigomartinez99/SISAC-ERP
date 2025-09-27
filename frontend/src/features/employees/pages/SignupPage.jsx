@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import '../styles/Login.css'; // Usamos los mismos estilos del login
+import '../styles/Login.css';
+import Input from '../../components/common/Input.jsx'; // Importa el componente Input
+import Button from '../../components/common/Button.jsx'; // Importa el componente Button
 
 const SignupPage = () => {
     const navigate = useNavigate();
@@ -31,31 +33,51 @@ const SignupPage = () => {
             <div className="login-card">
                 <h2>Solicitar acceso a SISAC</h2>
                 <form onSubmit={handleSignup}>
-                    <div className="input-group">
-                        <label>Nombre:</label>
-                        <input type="text" name="name" value={formData.name} onChange={handleChange} required />
-                    </div>
-                    <div className="input-group">
-                        <label>Apellido:</label>
-                        <input type="text" name="lastname" value={formData.lastname} onChange={handleChange} required />
-                    </div>
-                    <div className="input-group">
-                        <label>Código de empresa:</label>
-                        <input type="text" name="companyCode" value={formData.companyCode} onChange={handleChange} required />
-                    </div>
-                    <div className="input-group">
-                        <label>Teléfono:</label>
-                        <input type="tel" name="phone" value={formData.phone} onChange={handleChange} required />
-                    </div>
-                    <div className="input-group">
-                        <label>Correo:</label>
-                        <input type="email" name="email" value={formData.email} onChange={handleChange} required />
-                    </div>
-                    <div className="input-group">
-                        <label>Puesto de trabajo:</label>
-                        <input type="text" name="jobTitle" value={formData.jobTitle} onChange={handleChange} required />
-                    </div>
-                    <button type="submit">Solicitar</button>
+                    <Input
+                        label="Nombre:"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                    />
+                    <Input
+                        label="Apellido:"
+                        name="lastname"
+                        value={formData.lastname}
+                        onChange={handleChange}
+                        required
+                    />
+                    <Input
+                        label="Código de empresa:"
+                        name="companyCode"
+                        value={formData.companyCode}
+                        onChange={handleChange}
+                        required
+                    />
+                    <Input
+                        label="Teléfono:"
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        required
+                    />
+                    <Input
+                        label="Correo:"
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                    />
+                    <Input
+                        label="Puesto de trabajo:"
+                        name="jobTitle"
+                        value={formData.jobTitle}
+                        onChange={handleChange}
+                        required
+                    />
+                    <Button type="submit">Solicitar</Button>
                 </form>
                 <p>
                     ¿Ya tienes una cuenta? <Link to="/login">Volver a login</Link>

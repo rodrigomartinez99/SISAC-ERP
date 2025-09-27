@@ -1,12 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/DashboardPage.css';
 import '../styles/EditProfile.css';
+import Input from '../../../components/common/Input.jsx'; // Importa el componente Input
+import Button from '../../../components/common/Button.jsx'; // Importa el componente Button
 
 const EditProfilePage = ({ user, setUser }) => {
-    const [profileData, setProfileData] = useState(user || {});
+    // Cargar el estado inicial del usuario desde las props o localStorage
+    const [profileData, setProfileData] = useState(() => {
+        const storedProfile = localStorage.getItem('userProfile');
+        return storedProfile ? JSON.parse(storedProfile) : (user || {});
+    });
+    
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
+
+    // Actualizar el localStorage cada vez que profileData cambie
+    useEffect(() => {
+        // Aseguramos que solo se guarde cuando haya datos de usuario
+        if (profileData && Object.keys(profileData).length > 0) {
+            localStorage.setItem('userProfile', JSON.stringify(profileData));
+        }
+    }, [profileData]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -16,9 +31,6 @@ const EditProfilePage = ({ user, setUser }) => {
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            // ** COMENTARIO: Lógica para manejar la subida de foto **
-            // Esto solo muestra una previsualización. La lógica real de subida iría aquí.
-            // Es importante validar el tamaño y formato del archivo antes de subirlo.
             if (file.size > 2 * 1024 * 1024) { // 2MB
                 alert('La foto es demasiado grande. Por favor, elige una más pequeña.');
                 return;
@@ -28,19 +40,23 @@ const EditProfilePage = ({ user, setUser }) => {
                 setProfileData({ ...profileData, profilePic: reader.result });
             };
             reader.readAsDataURL(file);
-            // ** FIN COMENTARIO **
         }
     };
 
     const handleSave = (e) => {
         e.preventDefault();
-        setUser(profileData); // Actualiza el estado global del usuario
+        setUser(profileData);
         alert('Perfil actualizado con éxito.');
-        navigate('/dashboard'); // Redirige de vuelta al dashboard
+        navigate('/dashboard');
+    };
+    
+    const handleGoBack = () => {
+        navigate(-1); // Regresa a la página anterior
     };
 
     return (
         <div className="edit-profile-container">
+            <Button onClick={handleGoBack} className="go-back-button">← Volver</Button>
             <h1>Editar Perfil</h1>
             <form onSubmit={handleSave}>
                 <div className="profile-photo-section">
@@ -62,32 +78,47 @@ const EditProfilePage = ({ user, setUser }) => {
                 </div>
 
                 <div className="input-row">
-                    <div className="input-group">
-                        <label>Nombre:</label>
-                        <input type="text" name="firstName" value={profileData.firstName || ''} onChange={handleChange} required />
-                    </div>
-                    <div className="input-group">
-                        <label>Apellido:</label>
-                        <input type="text" name="lastName" value={profileData.lastName || ''} onChange={handleChange} required />
-                    </div>
+                    <Input
+                        label="Nombre:"
+                        name="firstName"
+                        value={profileData.firstName || ''}
+                        onChange={handleChange}
+                        required
+                    />
+                    <Input
+                        label="Apellido:"
+                        name="lastName"
+                        value={profileData.lastName || ''}
+                        onChange={handleChange}
+                        required
+                    />
                 </div>
 
                 <div className="input-row">
-                    <div className="input-group">
-                        <label>Teléfono:</label>
-                        <input type="tel" name="phone" value={profileData.phone || ''} onChange={handleChange} />
-                    </div>
-                    <div className="input-group">
-                        <label>Correo:</label>
-                        <input type="email" name="email" value={profileData.email || ''} onChange={handleChange} required />
-                    </div>
+                    <Input
+                        label="Teléfono:"
+                        type="tel"
+                        name="phone"
+                        value={profileData.phone || ''}
+                        onChange={handleChange}
+                    />
+                    <Input
+                        label="Correo:"
+                        type="email"
+                        name="email"
+                        value={profileData.email || ''}
+                        onChange={handleChange}
+                        required
+                    />
                 </div>
 
                 <div className="input-row">
-                    <div className="input-group">
-                        <label>Puesto de trabajo:</label>
-                        <input type="text" name="jobTitle" value={profileData.jobTitle || ''} onChange={handleChange} />
-                    </div>
+                    <Input
+                        label="Puesto de trabajo:"
+                        name="jobTitle"
+                        value={profileData.jobTitle || ''}
+                        onChange={handleChange}
+                    />
                     <div className="input-group">
                         <label>Contraseña:</label>
                         <input
@@ -96,13 +127,12 @@ const EditProfilePage = ({ user, setUser }) => {
                             value="********" // No se puede modificar
                             disabled
                         />
-                        <button type="button" onClick={() => setShowPassword(!showPassword)}>
+                        <Button type="button" onClick={() => setShowPassword(!showPassword)}>
                             {showPassword ? 'Ocultar' : 'Mostrar'}
-                        </button>
+                        </Button>
                     </div>
                 </div>
-
-                <button type="submit" className="save-button">Guardar cambios</button>
+                <Button type="submit" className="save-button">Guardar cambios</Button>
             </form>
         </div>
     );
