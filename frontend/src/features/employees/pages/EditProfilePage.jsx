@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '@/features/employees/styles/DashboardPage.css';
-import '@/features/employees/styles/EditProfile.css';
-import Input from '@/components/common/Input.jsx'; // Importa el componente Input
-import Button from '@/components/common/Button.jsx'; // Importa el componente Button
+import '@styles_e/DashboardPage.css';
+import '@styles_e/EditProfile.css';
+import Input from '@common/Input.jsx'; // Importa el componente Input
+import Button from '@common/Button.jsx'; // Importa el componente Button
 
 const EditProfilePage = ({ user, setUser }) => {
     // Cargar el estado inicial del usuario desde las props o localStorage

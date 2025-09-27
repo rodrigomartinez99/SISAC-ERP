@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import LoginPage from '@/features/employees/pages/LoginPage.jsx';
-import SignupPage from '@/features/employees/pages/SignupPage.jsx';
-import DashboardPage from '@/features/employees/pages/DashboardPage.jsx';
-import EditProfilePage from '@/features/employees/pages/EditProfilePage.jsx';
+import LoginPage from '@pages_e/LoginPage.jsx';
+import SignupPage from '@pages_e/SignupPage.jsx';
+import DashboardPage from '@pages_e/DashboardPage.jsx';
+import EditProfilePage from '@pages_e/EditProfilePage.jsx';
 
 const PrivateRoute = ({ children, isAuthenticated }) => {
     return isAuthenticated ? children : <Navigate to="/login" />;

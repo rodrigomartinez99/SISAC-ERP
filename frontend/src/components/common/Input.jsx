@@ -1,5 +1,5 @@
 import React from 'react';
-import '@/styles/Input.css'; // Crea este archivo CSS
+import '@styles/Input.css'; // Crea este archivo CSS
 
 const Input = ({ label, type = 'text', name, value, onChange, required, className = '' }) => {
     return (

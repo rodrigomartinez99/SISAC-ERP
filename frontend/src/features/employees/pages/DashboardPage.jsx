@@ -1,8 +1,8 @@
 import React from 'react';
-import Sidebar from '@/components/ui/SideBar.jsx';
-import Navbar from '@/components/ui/Navbar.jsx';
-import DashboardWidget from '@/features/employees/components/DashboardWidget.jsx'; // Importamos el widget
-import '@/features/employees/styles/DashboardPage.css';
+import Sidebar from '@ui/SideBar.jsx';
+import Navbar from '@ui/Navbar.jsx';
+import DashboardWidget from '@components/DashboardWidget.jsx'; // Importamos el widget
+import '@styles_e/DashboardPage.css';
 
 const DashboardPage = ({ user, onLogout }) => {
     // ** Simulación de datos para los widgets **
