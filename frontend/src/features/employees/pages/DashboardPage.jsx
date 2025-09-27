@@ -1,7 +1,7 @@
 import React from 'react';
-import Sidebar from '../../../components/ui/Sidebar.jsx';
-import Navbar from '../../../components/ui/Navbar.jsx';
-import '../styles/DashboardPage.css';
+import Sidebar from '@/components/ui/SideBar.jsx';
+import Navbar from '@/components/ui/Navbar.jsx';
+import '@/features/employees/styles/DashboardPage.css';
 
 const DashboardPage = ({ user, onLogout }) => {
     return (
