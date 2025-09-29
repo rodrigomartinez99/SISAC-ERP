@@ -1,3 +1,4 @@
+// src/ui/Sidebar.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -9,11 +10,13 @@ const Sidebar = () => {
                     <li>
                         <Link to="/dashboard">Dashboard</Link>
                     </li>
+                    {/* Enlace para la nueva página de Parámetros Legales */}
                     <li>
-                        <Link to="/dashboard">Admin. Tributaria</Link>
+                        <Link to="/masters/legal-parameters">Maestros y Configuración</Link> 
                     </li>
+                    {/* Enlace para la nueva página de Detalles de Nómina */}
                     <li>
-                        <Link to="/dashboard">Pago de Planillas</Link>
+                        <Link to="/masters/employee-payroll">Pago de Planillas</Link> 
                     </li>
                     <li>
                         <Link to="/dashboard">Contratación de Personal</Link>
