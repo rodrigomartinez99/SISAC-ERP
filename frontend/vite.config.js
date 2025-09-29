@@ -21,6 +21,7 @@ export default defineConfig({
       '@pages': path.resolve(__dirname, './src/pages'),
       '@styles': path.resolve(__dirname, './src/styles'),
       '@masters': path.resolve(__dirname, './src/features/payroll/components/masters'),
+      '@processes': path.resolve(__dirname, './src/features/payroll/components/processes'),
     },
   },
 });

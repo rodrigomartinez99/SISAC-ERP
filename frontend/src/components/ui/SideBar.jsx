@@ -10,13 +10,16 @@ const Sidebar = () => {
                     <li>
                         <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    {/* Enlace para la nueva página de Parámetros Legales */}
                     <li>
                         <Link to="/masters/legal-parameters">Maestros y Configuración</Link> 
                     </li>
-                    {/* Enlace para la nueva página de Detalles de Nómina */}
                     <li>
-                        <Link to="/masters/employee-payroll">Pago de Planillas</Link> 
+                        {/* Puedes agrupar las opciones de nómina en un menú desplegable si quieres,
+                          pero por ahora las ponemos como enlaces directos para simplificar */}
+                        <Link to="/payroll/novelties">Ingreso de Novedades</Link>
+                    </li>
+                    <li>
+                        <Link to="/payroll/review">Revisión de Pre-Nómina</Link>
                     </li>
                     <li>
                         <Link to="/dashboard">Contratación de Personal</Link>
