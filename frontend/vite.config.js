@@ -20,6 +20,7 @@ export default defineConfig({
       '@layouts': path.resolve(__dirname, './src/layouts'),
       '@pages': path.resolve(__dirname, './src/pages'),
       '@styles': path.resolve(__dirname, './src/styles'),
+      '@masters': path.resolve(__dirname, './src/features/payroll/components/masters'),
     },
   },
 });

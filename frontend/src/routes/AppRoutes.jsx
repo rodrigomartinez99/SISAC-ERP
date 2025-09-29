@@ -1,3 +1,4 @@
+// src/AppRoutes.jsx
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from '@pages_e/LoginPage.jsx';
@@ -5,6 +6,8 @@ import SignupPage from '@pages_e/SignupPage.jsx';
 import DashboardPage from '@pages_e/DashboardPage.jsx';
 import EditProfilePage from '@pages_e/EditProfilePage.jsx';
 import PayrollSelfServicePage from '@pages_e/PayrollSelfServicePage.jsx';
+import EmployeePayrollDetails from '@masters/EmployeePayrollDetails.jsx';
+import LegalParametersTable from '@masters/LegalParametersTable.jsx';
 
 const PrivateRoute = ({ children, isAuthenticated }) => {
     return isAuthenticated ? children : <Navigate to="/login" />;
@@ -16,9 +19,6 @@ export default function AppRoutes() {
 
     const handleLogin = () => {
         setIsLoggedIn(true);
-
-        // ** COMENTARIO: Lógica de prueba para guardar los datos del usuario "admin" **
-        // En un escenario real, esta información vendría del backend
         setUser({
             firstName: 'Usuario',
             lastName: 'Prueba',
@@ -26,7 +26,6 @@ export default function AppRoutes() {
             phone: '999-999-999',
             jobTitle: 'Administrador'
         });
-        // ** FIN COMENTARIO **
     };
 
     const handleLogout = () => {
@@ -40,8 +39,8 @@ export default function AppRoutes() {
                 <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
                 <Route path="/signup" element={<SignupPage />} />
                 
-                <Route
-                    path="/dashboard"
+                <Route 
+                    path="/dashboard" 
                     element={
                         <PrivateRoute isAuthenticated={isLoggedIn}>
                             <DashboardPage user={user} onLogout={handleLogout} />
@@ -49,8 +48,8 @@ export default function AppRoutes() {
                     }
                 />
                 
-                <Route
-                    path="/dashboard/edit-profile"
+                <Route 
+                    path="/dashboard/edit-profile" 
                     element={
                         <PrivateRoute isAuthenticated={isLoggedIn}>
                             <EditProfilePage user={user} setUser={setUser} />
@@ -58,11 +57,30 @@ export default function AppRoutes() {
                     }
                 />
 
-                <Route
-                    path="/dashboard/payroll-selfservice"
+                <Route 
+                    path="/dashboard/payroll-selfservice" 
                     element={
                         <PrivateRoute isAuthenticated={isLoggedIn}>
                             <PayrollSelfServicePage user={user} onLogout={handleLogout} />
+                        </PrivateRoute>
+                    }
+                />
+                
+                {/* Nuevas rutas para los componentes maestros */}
+                <Route 
+                    path="/masters/legal-parameters" 
+                    element={
+                        <PrivateRoute isAuthenticated={isLoggedIn}>
+                            <LegalParametersTable user={user} onLogout={handleLogout} />
+                        </PrivateRoute>
+                    }
+                />
+                
+                <Route 
+                    path="/masters/employee-payroll" 
+                    element={
+                        <PrivateRoute isAuthenticated={isLoggedIn}>
+                            <EmployeePayrollDetails user={user} onLogout={handleLogout} />
                         </PrivateRoute>
                     }
                 />
