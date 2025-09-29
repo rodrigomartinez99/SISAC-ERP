@@ -4,6 +4,7 @@ import LoginPage from '@pages_e/LoginPage.jsx';
 import SignupPage from '@pages_e/SignupPage.jsx';
 import DashboardPage from '@pages_e/DashboardPage.jsx';
 import EditProfilePage from '@pages_e/EditProfilePage.jsx';
+import PayrollSelfServicePage from '@pages_e/PayrollSelfServicePage.jsx';
 
 const PrivateRoute = ({ children, isAuthenticated }) => {
     return isAuthenticated ? children : <Navigate to="/login" />;
@@ -53,6 +54,15 @@ export default function AppRoutes() {
                     element={
                         <PrivateRoute isAuthenticated={isLoggedIn}>
                             <EditProfilePage user={user} setUser={setUser} />
+                        </PrivateRoute>
+                    }
+                />
+
+                <Route
+                    path="/dashboard/payroll-selfservice"
+                    element={
+                        <PrivateRoute isAuthenticated={isLoggedIn}>
+                            <PayrollSelfServicePage user={user} onLogout={handleLogout} />
                         </PrivateRoute>
                     }
                 />
