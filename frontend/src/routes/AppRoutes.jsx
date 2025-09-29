@@ -8,8 +8,10 @@ import EditProfilePage from '@pages_e/EditProfilePage.jsx';
 import PayrollSelfServicePage from '@pages_e/PayrollSelfServicePage.jsx';
 import EmployeePayrollDetails from '@masters/EmployeePayrollDetails.jsx';
 import LegalParametersTable from '@masters/LegalParametersTable.jsx';
-import MonthlyNoveltyEntry from '@processes/MonthlyNoveltyEntry.jsx'; // Nuevo
-import PrePayrollReviewTable from '@processes/PrePayrollReviewTable.jsx'; // Nuevo
+import MonthlyNoveltyEntry from '@processes/MonthlyNoveltyEntry.jsx'; 
+import PrePayrollReviewTable from '@processes/PrePayrollReviewTable.jsx';
+import PayrollSummaryReportPage from '@reports/PayrollSummaryReportPage.jsx'; // Nuevo
+import OutputFilesPage from '@reports/OutputFilesPage.jsx'; // Nuevo
 
 const PrivateRoute = ({ children, isAuthenticated }) => {
     return isAuthenticated ? children : <Navigate to="/login" />;
@@ -86,7 +88,6 @@ export default function AppRoutes() {
                     }
                 />
 
-                {/* Nuevas rutas para el proceso de liquidación */}
                 <Route
                     path="/payroll/novelties"
                     element={
@@ -101,6 +102,25 @@ export default function AppRoutes() {
                     element={
                         <PrivateRoute isAuthenticated={isLoggedIn}>
                             <PrePayrollReviewTable user={user} onLogout={handleLogout} />
+                        </PrivateRoute>
+                    }
+                />
+                
+                {/* Nuevas rutas para los reportes */}
+                <Route
+                    path="/reports/summary"
+                    element={
+                        <PrivateRoute isAuthenticated={isLoggedIn}>
+                            <PayrollSummaryReportPage user={user} onLogout={handleLogout} />
+                        </PrivateRoute>
+                    }
+                />
+                
+                <Route
+                    path="/reports/output-files"
+                    element={
+                        <PrivateRoute isAuthenticated={isLoggedIn}>
+                            <OutputFilesPage user={user} onLogout={handleLogout} />
                         </PrivateRoute>
                     }
                 />

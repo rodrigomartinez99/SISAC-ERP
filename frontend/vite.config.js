@@ -22,6 +22,7 @@ export default defineConfig({
       '@styles': path.resolve(__dirname, './src/styles'),
       '@masters': path.resolve(__dirname, './src/features/payroll/components/masters'),
       '@processes': path.resolve(__dirname, './src/features/payroll/components/processes'),
+      '@reports': path.resolve(__dirname, './src/features/payroll/components/reports'),
     },
   },
 });
