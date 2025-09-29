@@ -8,6 +8,8 @@ import EditProfilePage from '@pages_e/EditProfilePage.jsx';
 import PayrollSelfServicePage from '@pages_e/PayrollSelfServicePage.jsx';
 import EmployeePayrollDetails from '@masters/EmployeePayrollDetails.jsx';
 import LegalParametersTable from '@masters/LegalParametersTable.jsx';
+import MonthlyNoveltyEntry from '@processes/MonthlyNoveltyEntry.jsx'; // Nuevo
+import PrePayrollReviewTable from '@processes/PrePayrollReviewTable.jsx'; // Nuevo
 
 const PrivateRoute = ({ children, isAuthenticated }) => {
     return isAuthenticated ? children : <Navigate to="/login" />;
@@ -66,7 +68,6 @@ export default function AppRoutes() {
                     }
                 />
                 
-                {/* Nuevas rutas para los componentes maestros */}
                 <Route 
                     path="/masters/legal-parameters" 
                     element={
@@ -81,6 +82,25 @@ export default function AppRoutes() {
                     element={
                         <PrivateRoute isAuthenticated={isLoggedIn}>
                             <EmployeePayrollDetails user={user} onLogout={handleLogout} />
+                        </PrivateRoute>
+                    }
+                />
+
+                {/* Nuevas rutas para el proceso de liquidación */}
+                <Route
+                    path="/payroll/novelties"
+                    element={
+                        <PrivateRoute isAuthenticated={isLoggedIn}>
+                            <MonthlyNoveltyEntry user={user} onLogout={handleLogout} />
+                        </PrivateRoute>
+                    }
+                />
+
+                <Route
+                    path="/payroll/review"
+                    element={
+                        <PrivateRoute isAuthenticated={isLoggedIn}>
+                            <PrePayrollReviewTable user={user} onLogout={handleLogout} />
                         </PrivateRoute>
                     }
                 />
