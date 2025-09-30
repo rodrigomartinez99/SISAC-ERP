@@ -12,6 +12,11 @@ import MonthlyNoveltyEntry from '@processes/MonthlyNoveltyEntry.jsx';
 import PrePayrollReviewTable from '@processes/PrePayrollReviewTable.jsx';
 import PayrollSummaryReportPage from '@reports/PayrollSummaryReportPage.jsx'; // Nuevo
 import OutputFilesPage from '@reports/OutputFilesPage.jsx'; // Nuevo
+import TaxConfigPage from '@tax/pages/TaxConfigPage.jsx';
+import DailyOpsPage from '@tax/pages/DailyOpsPage.jsx';
+import MonthlyClosingPage from '@tax/pages/MonthlyClosingPage.jsx';
+
+
 
 const PrivateRoute = ({ children, isAuthenticated }) => {
     return isAuthenticated ? children : <Navigate to="/login" />;
@@ -124,6 +129,33 @@ export default function AppRoutes() {
                         </PrivateRoute>
                     }
                 />
+
+                {/* Sección Tributaria */}
+                <Route
+                    path="/tax/config"
+                    element={
+                        <PrivateRoute isAuthenticated={isLoggedIn}>
+                            <TaxConfigPage user={user} onLogout={handleLogout} />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/tax/daily"
+                    element={
+                        <PrivateRoute isAuthenticated={isLoggedIn}>
+                            <DailyOpsPage user={user} onLogout={handleLogout} />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/tax/closing"
+                    element={
+                        <PrivateRoute isAuthenticated={isLoggedIn}>
+                            <MonthlyClosingPage user={user} onLogout={handleLogout} />
+                        </PrivateRoute>
+                    }
+                />
+
 
                 <Route path="*" element={<Navigate to="/login" />} />
             </Routes>
