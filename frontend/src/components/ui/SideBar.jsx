@@ -32,6 +32,16 @@ const Sidebar = () => {
                     <li>
                         <Link to="/dashboard">Contratación de Personal</Link>
                     </li>
+                    {/* Sección Tributaria */}
+                    <li>
+                        <Link to="/tax/config">Configuración Tributaria</Link>
+                    </li>
+                    <li>
+                        <Link to="/tax/daily">Operación Diaria</Link>
+                    </li>
+                    <li>
+                        <Link to="/tax/closing">Cierre Mensual</Link>
+                    </li>
                 </ul>
             </nav>
         </aside>
