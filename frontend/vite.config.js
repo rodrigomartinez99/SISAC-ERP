@@ -1,10 +1,15 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import path from 'path';
+import path from 'path'
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  server: {
+    host: '0.0.0.0',
+    port: 5173,
+    strictPort: true,
+    allowedHosts: ['.ngrok-free.app', '.ngrok.io', '.share.zrok.io', '"aec79ad4674f.ngrok-free.app', "d68f07185742.ngrok-free.app"],
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
@@ -26,4 +31,4 @@ export default defineConfig({
       '@tax': path.resolve(__dirname, './src/features/tax'),
     },
   },
-});
+})
