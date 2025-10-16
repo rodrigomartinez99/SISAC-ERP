@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { LayoutDashboard, Settings, Calculator, BarChart3, User, LogOut, ReceiptText, Briefcase } from 'lucide-react';
 
-// --- Constants (Combined from other components to ensure single-file integrity) ---
 const ROLES = {
   ADMIN: 'Administrador',
   EMPLOYEE: 'Empleado',
@@ -9,14 +8,9 @@ const ROLES = {
 
 const MOCK_USER_INFO = {
   name: 'Alex Johnson',
-  initials: 'AJ', // Used for the profile button initial
+  initials: 'AJ',
 };
-// ---------------------------------------------------------------------------------
 
-/**
- * Componente funcional para el SideBar (Menu lateral).
- * Solo visible y fully functional when the user role is 'Administrador'.
- */
 const SideBar = ({ role, currentPage, setPage }) => {
   const adminNav = [
     { name: 'Dashboard', icon: LayoutDashboard, page: 'dashboard' },
@@ -25,16 +19,12 @@ const SideBar = ({ role, currentPage, setPage }) => {
     { name: 'Reportes y Salidas', icon: BarChart3, page: 'reports' },
   ];
 
-  // If the current role is not Administrator, display a restricted view.
   if (role !== ROLES.ADMIN) {
     return (
-      <div className="w-0 bg-gray-800 text-white flex flex-col h-full fixed shadow-xl overflow-hidden">
-        {/* Empty placeholder for non-admin roles */}
-      </div>
+      <div className="w-0 bg-gray-800 text-white flex flex-col h-full fixed shadow-xl overflow-hidden" />
     );
   }
 
-  // Display the full admin sidebar for the Administrator role.
   return (
     <div className="w-64 bg-gray-800 text-white flex flex-col h-full fixed shadow-xl">
       <div className="p-6 text-2xl font-bold text-indigo-400 border-b border-gray-700">SISAC 💸</div>
@@ -59,20 +49,14 @@ const SideBar = ({ role, currentPage, setPage }) => {
   );
 };
 
-/**
- * Componente funcional para el User Menu desplegable.
- */
 const UserMenu = ({ role, setRole, setPage, isMenuOpen, setIsMenuOpen }) => {
-  // We use setPage to handle navigation, which implicitly handles "special pages" for this mockup
   const navigateToSpecialPage = (pageName) => {
     console.log(`Navigating to special page: ${pageName}`);
-    // In a real app, you would use setPage or a router for this
     setIsMenuOpen(false);
   };
 
   return (
     <div className="relative">
-      {/* Botón de Perfil */}
       <button 
         onClick={() => setIsMenuOpen(!isMenuOpen)}
         className="w-10 h-10 bg-indigo-500 rounded-full flex items-center justify-center text-white font-medium hover:ring-2 hover:ring-indigo-300 transition shadow-md"
@@ -80,7 +64,6 @@ const UserMenu = ({ role, setRole, setPage, isMenuOpen, setIsMenuOpen }) => {
         {MOCK_USER_INFO.initials}
       </button>
 
-      {/* Menú Dropdown */}
       {isMenuOpen && (
         <div className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border border-gray-100 z-50 transform origin-top-right animate-scaleIn">
           <div className="p-4 border-b">
@@ -107,7 +90,6 @@ const UserMenu = ({ role, setRole, setPage, isMenuOpen, setIsMenuOpen }) => {
 
             <hr className="my-1 border-gray-100" />
 
-            {/* Funcionalidad: Cambiar Rol */}
             <div className="pt-2">
               <span className="px-3 text-xs font-semibold uppercase text-gray-400">Cambiar Rol</span>
               <button
@@ -128,7 +110,6 @@ const UserMenu = ({ role, setRole, setPage, isMenuOpen, setIsMenuOpen }) => {
 
             <hr className="my-1 border-gray-100" />
             
-            {/* Cerrar Sesión (Simulación) */}
             <button
               onClick={() => { console.log('Cerrando sesión...'); setIsMenuOpen(false); }}
               className="w-full flex items-center p-3 text-sm text-red-600 rounded-lg hover:bg-red-50 transition font-medium"
@@ -143,13 +124,9 @@ const UserMenu = ({ role, setRole, setPage, isMenuOpen, setIsMenuOpen }) => {
   );
 };
 
-/**
- * Componente funcional para el Navbar (Barra de navegación superior).
- */
 const Navbar = ({ role, currentPage, setPage, setRole }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Helper function to capitalize the first letter for display
   const formatPageName = (page) => {
     if (page === 'self-service') return 'Mi Nómina';
     return page.charAt(0).toUpperCase() + page.slice(1);
@@ -157,20 +134,14 @@ const Navbar = ({ role, currentPage, setPage, setRole }) => {
 
   return (
     <header className="h-16 bg-white shadow-md flex items-center justify-between px-6 sticky top-0 z-40">
-      <div className="flex items-center">
-        {/* Título de la página actual */}
-        <h1 className="text-xl font-semibold text-gray-800">
-          {formatPageName(currentPage)}
-        </h1>
-      </div>
+      <h1 className="text-xl font-semibold text-gray-800">
+        {formatPageName(currentPage)}
+      </h1>
 
       <div className="flex items-center space-x-4">
-        {/* Display Current Role */}
         <span className="text-sm text-gray-500 hidden sm:inline">
           Rol activo: <span className="font-bold text-indigo-600 capitalize">{role}</span>
         </span>
-        
-        {/* User Menu */}
         <UserMenu
           role={role}
           setRole={setRole}
@@ -183,24 +154,15 @@ const Navbar = ({ role, currentPage, setPage, setRole }) => {
   );
 };
 
-
-/**
- * Layout principal para el Dashboard (Admin o Empleado).
- * Incluye la SideBar y la Navbar.
- */
 const DashboardLayout = ({ role, currentPage, setPage, children }) => {
-  // Use a local state for the role to allow the UserMenu to update it
   const [currentRole, setCurrentRole] = useState(role);
 
-  // Function to handle role change and subsequent page redirection
   const handleRoleChange = (newRole) => {
     setCurrentRole(newRole);
-    // Redirect after role change based on the new role
     setPage(newRole === ROLES.ADMIN ? 'dashboard' : 'self-service');
   };
 
   const isEmployee = currentRole === ROLES.EMPLOYEE;
-  // If it's an employee, the content spans full width (no sidebar).
   const sidebarMarginClass = isEmployee ? 'lg:ml-0' : 'lg:ml-64';
 
   return (
@@ -214,25 +176,23 @@ const DashboardLayout = ({ role, currentPage, setPage, children }) => {
           to { transform: scale(1); opacity: 1; }
         }
       `}</style>
+
       <script src="https://cdn.tailwindcss.com"></script>
 
-      {/* SideBar: solo visible para el Admin */}
       <SideBar
         role={currentRole}
         currentPage={currentPage}
         setPage={setPage}
       />
       
-      {/* Contenido principal con margen para la SideBar */}
       <div className={`flex-1 flex flex-col transition-all duration-300 w-full ${sidebarMarginClass}`}>
         <Navbar
           role={currentRole}
           currentPage={currentPage}
           setPage={setPage}
-          setRole={handleRoleChange} // Pass the handler to Navbar (which passes it to UserMenu)
+          setRole={handleRoleChange}
         />
         
-        {/* Contenido de la página */}
         <main className="flex-1 p-4 sm:p-6 overflow-y-auto">
           {children}
         </main>
