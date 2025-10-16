@@ -24,6 +24,39 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Tabla de roles para el sistema de autenticación
+--
+
+CREATE TABLE `roles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(50) NOT NULL,
+  `descripcion` varchar(255) DEFAULT NULL,
+  `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Tabla de usuarios administrativos
+--
+
+CREATE TABLE `usuarios_admin` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(100) NOT NULL UNIQUE,
+  `password_hash` varchar(255) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `apellido` varchar(100) NOT NULL,
+  `rol_id` int(11) NOT NULL,
+  `activo` tinyint(1) DEFAULT 1,
+  `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `fk_rol` (`rol_id`),
+  CONSTRAINT `fk_usuarios_admin_rol` FOREIGN KEY (`rol_id`) REFERENCES `roles` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `asistencias`
 --
 
@@ -885,6 +918,23 @@ ALTER TABLE `remuneraciones`
 --
 ALTER TABLE `reportes`
   ADD CONSTRAINT `fk_rep_contrib` FOREIGN KEY (`contribuyente_id`) REFERENCES `contribuyentes` (`id`) ON DELETE CASCADE;
+
+--
+-- Datos iniciales para autenticación
+--
+
+-- Insertar roles del sistema
+INSERT INTO roles (nombre, descripcion) VALUES 
+('ADMIN_TRIBUTARIO', 'Administrador de Gestión Tributaria'),
+('GESTOR_PLANILLA', 'Gestor de Pago de Planilla'), 
+('GESTOR_CONTRATACION', 'Gestor de Contratación de Personal');
+
+-- Insertar usuarios de prueba (contraseña: admin123)
+INSERT INTO usuarios_admin (email, password_hash, nombre, apellido, rol_id) VALUES
+('tributario@sisac.com', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lbCOIQce8QdHdEixC', 'Carlos', 'Tributario', 1),
+('planilla@sisac.com', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lbCOIQce8QdHdEixC', 'María', 'Planilla', 2),
+('contratacion@sisac.com', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lbCOIQce8QdHdEixC', 'Juan', 'Contratación', 3);
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
