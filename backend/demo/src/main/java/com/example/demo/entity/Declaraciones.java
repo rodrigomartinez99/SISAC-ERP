@@ -13,19 +13,40 @@ public class Declaraciones {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "contribuyente_id")
+    @JoinColumn(name = "contribuyente_id", nullable = false)
     private Contribuyentes contribuyente;
-
+    
+    @Column(length = 6, nullable = false)
     private String periodo; // "YYYYMM"
+    
+    @Column(precision = 12, scale = 2)
     private BigDecimal igvDebito;
+    
+    @Column(precision = 12, scale = 2)
     private BigDecimal igvCredito;
+    
+    @Column(precision = 12, scale = 2)
     private BigDecimal igvNeto;
+    
+    @Column(precision = 12, scale = 2)
     private BigDecimal rentaPagoCuenta;
+    
+    @Column(name = "form_621_pdf", length = 255)
     private String form621Pdf;
+    
+    @Column(name = "resumen_igv_pdf", length = 255)
     private String resumenIgvPdf;
+    
+    @Column(name = "libro_ventas_xlsx", length = 255)
     private String libroVentasXlsx;
+    
+    @Column(name = "libro_compras_xlsx", length = 255)
     private String libroComprasXlsx;
+    
+    @Column(name = "paquete_zip", length = 255)
     private String paqueteZip;
+    
+    @Column(length = 50)
     private String estado; // PENDIENTE_CALCULO, PENDIENTE_APROBACION, APROBADO_LISTO_PRESENTAR, RECHAZADO_AJUSTES
 
     @Column(updatable = false)
