@@ -39,6 +39,10 @@ const Navbar = ({ user, onLogout }) => {
                             <button onClick={() => navigate('/dashboard/edit-profile')}>
                                 Editar Perfil
                             </button>
+                            {/* ¡Nueva opción agregada! */}
+                            <button onClick={() => navigate('/dashboard/payroll-selfservice')}>
+                                Mi Nómina
+                            </button>
                             <button onClick={handleLogout}>Cerrar Sesión</button>
                         </div>
                     )}
