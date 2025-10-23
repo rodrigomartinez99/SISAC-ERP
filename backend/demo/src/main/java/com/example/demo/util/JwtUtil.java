@@ -1,7 +1,10 @@
 package com.example.demo.util;
 
+import com.example.demo.entity.UsuarioAdmin;
+import com.example.demo.repository.UsuarioAdminRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +23,9 @@ public class JwtUtil {
 
     @Value("${jwt.expiration-ms}")
     private Long jwtExpiration;
+    
+    @Autowired
+    private UsuarioAdminRepository usuarioAdminRepository; // Para buscar el contribuyente
 
     private SecretKey getSigningKey() {
         byte[] keyBytes = secret.getBytes(StandardCharsets.UTF_8);
@@ -55,6 +61,13 @@ public class JwtUtil {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", role);
         claims.put("userId", userId);
+        
+        // (Simulación) Asumimos que el admin tributario gestiona el contribuyente ID 1
+        // En un sistema multi-tenant, esto vendría del usuario.
+        if ("ADMIN_TRIBUTARIO".equals(role)) {
+            claims.put("contribuyenteId", 1L);
+        }
+        
         return createToken(claims, username);
     }
 
@@ -79,6 +92,18 @@ public class JwtUtil {
 
     public Long extractUserId(String token) {
         return extractClaim(token, claims -> claims.get("userId", Long.class));
+    }
+
+    // NUEVO -> para extraer el ID del contribuyente
+    public Long extractContribuyenteIdFromToken(String token) {
+        if (token != null && token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
+        try {
+            return extractClaim(token, claims -> claims.get("contribuyenteId", Long.class));
+        } catch (Exception e) {
+            return null; // O manejar como excepción
+        }
     }
 
     public boolean isValidToken(String token) {

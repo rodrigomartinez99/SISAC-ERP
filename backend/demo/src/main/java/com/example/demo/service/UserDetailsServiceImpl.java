@@ -22,13 +22,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        System.out.println("🔍 Buscando usuario por email: " + email);
+        System.out.println("--> Buscando usuario por email: " + email);
         
         UsuarioAdmin usuario = usuarioAdminRepository.findByEmailAndActivoTrue(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + email));
         
-        System.out.println("✅ Usuario encontrado: " + usuario.getEmail() + ", Activo: " + usuario.getActivo());
-        System.out.println("🔍 Password hash en DB: " + usuario.getPasswordHash());
+        System.out.println("--> Usuario encontrado: " + usuario.getEmail() + ", Activo: " + usuario.getActivo());
+        System.out.println("--> Password hash en DB: " + usuario.getPasswordHash());
 
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_" + usuario.getRole().getNombre()));
