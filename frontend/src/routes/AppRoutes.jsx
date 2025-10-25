@@ -1,6 +1,7 @@
 // src/AppRoutes.jsx
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 import LoginPage from '@pages_e/LoginPage.jsx';
 import SignupPage from '@pages_e/SignupPage.jsx';
 import DashboardPage from '@pages_e/DashboardPage.jsx';
@@ -15,6 +16,9 @@ import OutputFilesPage from '@reports/OutputFilesPage.jsx'; // Nuevo
 import TaxConfigPage from '@tax/pages/TaxConfigPage.jsx';
 import DailyOpsPage from '@tax/pages/DailyOpsPage.jsx';
 import MonthlyClosingPage from '@tax/pages/MonthlyClosingPage.jsx';
+import ConvocatoriasDashboardPage from '../features/convocatorias/pages/ConvocatoriasDashboardPage.jsx';
+import DashboardLayout from '../layouts/DashboardLayout.jsx';
+import TestConvocatorias from '../TestConvocatorias.jsx';
 
 
 
@@ -23,24 +27,11 @@ const PrivateRoute = ({ children, isAuthenticated }) => {
 };
 
 export default function AppRoutes() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [user, setUser] = useState(null);
-
-    const handleLogin = () => {
-        setIsLoggedIn(true);
-        setUser({
-            firstName: 'Usuario',
-            lastName: 'Prueba',
-            email: 'usuario.prueba@fontec.com',
-            phone: '999-999-999',
-            jobTitle: 'Administrador'
-        });
-    };
-
-    const handleLogout = () => {
-        setIsLoggedIn(false);
-        setUser(null);
-    };
+    const { user, isAuthenticated, logout } = useAuth();
+    
+    // Para compatibilidad con el código existente
+    const isLoggedIn = isAuthenticated;
+    const handleLogout = logout;
 
     return (
         <BrowserRouter>
@@ -156,6 +147,15 @@ export default function AppRoutes() {
                     }
                 />
 
+                {/* Sección Gestión de Convocatorias */}
+                <Route
+                    path="/convocatorias"
+                    element={
+                        <PrivateRoute isAuthenticated={isLoggedIn}>
+                            <TestConvocatorias />
+                        </PrivateRoute>
+                    }
+                />
 
                 <Route path="*" element={<Navigate to="/login" />} />
             </Routes>

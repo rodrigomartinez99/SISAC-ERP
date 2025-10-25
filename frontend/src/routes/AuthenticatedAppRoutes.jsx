@@ -24,6 +24,10 @@ import MastersConfigPage from '../features/payroll/pages/MastersConfigPage';
 import PayrollDashboardPage from '../features/payroll/pages/PayrollDashboardPage';
 import ReportsPage from '../features/payroll/pages/ReportsPage';
 
+// Módulo Convocatorias (GESTOR_CONTRATACION)
+import TestConvocatorias from '../TestConvocatorias';
+import ConvocatoriasDashboardPage from '../features/convocatorias/pages/ConvocatoriasDashboardPage';
+
 // Componentes específicos de planilla - Temporalmente comentados para arreglar imports
 // import EmployeePayrollDetails from '../features/payroll/components/masters/EmployeePayrollDetails';
 // import LegalParametersTable from '../features/payroll/components/masters/LegalParametersTable';
@@ -72,6 +76,7 @@ const ReportsRoutes = () => (
 // Rutas de contratación (placeholder para futura implementación)
 const HiringRoutes = () => (
   <Routes>
+    <Route path="/convocatorias" element={<ConvocatoriasDashboardPage />} />
     <Route path="/candidates" element={<div>Gestión de Postulantes - En desarrollo</div>} />
     <Route path="/interviews" element={<div>Gestión de Entrevistas - En desarrollo</div>} />
     <Route path="/employees" element={<div>Gestión de Empleados - En desarrollo</div>} />

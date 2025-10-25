@@ -19,6 +19,7 @@ const ROLE_PERMISSIONS = {
   ],
   GESTOR_CONTRATACION: [
     'view_dashboard',
+    'manage_job_postings',
     'manage_candidates',
     'manage_interviews',
     'manage_employees',
