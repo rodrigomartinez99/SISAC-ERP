@@ -84,6 +84,12 @@ const getNavigationByRole = (role) => {
           permission: 'view_dashboard'
         },
         { 
+          name: 'Gestión Convocatorias', 
+          path: '/hiring/convocatorias', 
+          icon: '📢',
+          permission: 'manage_job_postings'
+        },
+        { 
           name: 'Postulantes', 
           path: '/hiring/candidates', 
           icon: '👥',
