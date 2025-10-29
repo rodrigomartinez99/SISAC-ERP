@@ -57,6 +57,14 @@ public class SecurityConfig {
             .authorizeHttpRequests(authz -> authz
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/public/**").permitAll()
+                
+                // --- Reglas de Negocio por Rol ---
+                .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/tax/closing/descargar/**").hasRole("ADMIN_TRIBUTARIO")
+                .requestMatchers("/api/tax/**").hasRole("ADMIN_TRIBUTARIO")
+                // .requestMatchers("/api/payroll/**").hasRole("GESTOR_PLANILLA")
+                // .requestMatchers("/api/hiring/**").hasRole("GESTOR_CONTRATACION")
+                // ---------------------------------
+
                 .anyRequest().authenticated()
             );
 
