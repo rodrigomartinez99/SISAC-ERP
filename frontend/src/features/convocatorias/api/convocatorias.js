@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8081/api';
+//const API_BASE_URL = 'http://localhost:8081/api';
+const API_BASE_URL = 'https://nxp44knk8ww8.share.zrok.io/api';
 
 // Configurar axios instance con interceptores para JWT
 const apiClient = axios.create({

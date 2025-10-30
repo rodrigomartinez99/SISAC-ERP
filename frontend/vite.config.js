@@ -26,4 +26,9 @@ export default defineConfig({
       '@tax': path.resolve(__dirname, './src/features/tax'),
     },
   },
+
+  server: {
+    allowedHosts: ['.share.zrok.io'] 
+  }
+  
 });

@@ -25,7 +25,8 @@ export const useApiClient = () => {
     return response.json();
   };
 
-  const API_URL = 'http://localhost:8081/api/tax';
+  //const API_URL = 'http://localhost:8081/api/tax';
+  const API_URL = 'https://nxp44knk8ww8.share.zrok.io/api/tax';
 
   return {
     // --- Proceso 1: Configuración ---
