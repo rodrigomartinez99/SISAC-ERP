@@ -1,67 +1,67 @@
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\dto\CierreRequestDTO.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\repository\ContribuyentesRepository.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Notificaciones.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Pagos.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\ReportesOficiales.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\PresupuestoPlanilla.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\ComprobanteDetalles.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\service\AuthService.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Reportes.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\dto\ConfiguracionResponseDTO.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\service\AuditoriaService.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Clientes.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\config\SecurityConfig.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\dto\LoginResponse.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\controller\CierreMensualController.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\RegistroVentas.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\service\UserDetailsServiceImpl.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Remuneraciones.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Comprobantes.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Postulantes.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\repository\ClientesRepository.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\repository\RegistroComprasRepository.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\repository\RoleRepository.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\dto\VentaRequestDTO.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\dto\UserInfoResponse.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\RegistroCompras.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Entrevistas.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\controller\OperacionDiariaController.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\util\JwtUtil.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\service\OperacionDiariaService.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Role.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\CatalogoProductos.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\repository\ProveedoresRepository.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\filter\JwtAuthenticationFilter.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\controller\AuthController.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\controller\AuditLogController.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\CalendarioObligaciones.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\service\CierreMensualService.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Convocatorias.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\BoletasPago.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\ParametrosTributarios.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Planillas.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\UsuarioAdmin.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\dto\LoginRequest.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\repository\UsuarioAdminRepository.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\repository\CalendarioObligacionesRepository.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Proveedores.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\dto\ContribuyenteDTO.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\repository\ComprobantesRepository.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\dto\ParametrosTributariosDTO.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\repository\ParametrosTributariosRepository.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\repository\RegistroVentasRepository.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\controller\ConfiguracionController.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Empleados.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\DemoApplication.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\dto\DeclaracionAprobacionDTO.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\util\PasswordHashGenerator.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Cvs.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\dto\CompraRequestDTO.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Asistencias.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\repository\DeclaracionesRepository.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Declaraciones.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\service\ConfiguracionService.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Contribuyentes.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\repository\CatalogoProductosRepository.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Auditoria.java
-D:\UTP\2025 - Agosto\Integrador\Código\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\repository\AuditoriaRepository.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Declaraciones.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Reportes.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\service\UserDetailsServiceImpl.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\service\AuthService.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Auditoria.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\service\CierreMensualService.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\repository\RegistroComprasRepository.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\repository\CatalogoProductosRepository.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Cvs.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\repository\UsuarioAdminRepository.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Clientes.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\ComprobanteDetalles.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\util\JwtUtil.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\repository\RegistroVentasRepository.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\controller\AuthController.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\service\AuditoriaService.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\ParametrosTributarios.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\dto\UserInfoResponse.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\PresupuestoPlanilla.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\repository\RoleRepository.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\dto\LoginResponse.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\controller\OperacionDiariaController.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\dto\CompraRequestDTO.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\repository\CalendarioObligacionesRepository.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\dto\ContribuyenteDTO.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Asistencias.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Comprobantes.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Contribuyentes.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\repository\ProveedoresRepository.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\repository\AuditoriaRepository.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\repository\ClientesRepository.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\repository\ParametrosTributariosRepository.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\dto\VentaRequestDTO.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\RegistroCompras.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\ReportesOficiales.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\repository\ComprobantesRepository.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\dto\LoginRequest.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\CalendarioObligaciones.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\dto\ConfiguracionResponseDTO.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Notificaciones.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\UsuarioAdmin.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\config\SecurityConfig.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\service\ConfiguracionService.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Empleados.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Proveedores.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\repository\DeclaracionesRepository.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\filter\JwtAuthenticationFilter.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Role.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Convocatorias.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\DemoApplication.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\BoletasPago.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\RegistroVentas.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\repository\ContribuyentesRepository.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Pagos.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Remuneraciones.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\dto\ParametrosTributariosDTO.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Entrevistas.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\dto\CierreRequestDTO.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\controller\ConfiguracionController.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\service\OperacionDiariaService.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Planillas.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\controller\CierreMensualController.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\CatalogoProductos.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\util\PasswordHashGenerator.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\controller\AuditLogController.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\entity\Postulantes.java
+D:\RODRIGO\INTEGRADOR_1\SISAC-ERP\backend\maven-demo\src\main\java\com\example\demo\dto\DeclaracionAprobacionDTO.java
