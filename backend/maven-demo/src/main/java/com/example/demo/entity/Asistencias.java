@@ -10,10 +10,10 @@ import java.time.LocalDateTime;
 public class Asistencias {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idAsistencia;
+    private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "idEmpleado")
+    @JoinColumn(name = "empleado_id")
     private Empleados empleado;
 
     private LocalDate fecha;
@@ -33,12 +33,12 @@ public class Asistencias {
     
 
 
-    public Long getIdAsistencia() {
-        return this.idAsistencia;
+    public Long getId() {
+        return this.id;
     }
 
-    public void setIdAsistencia(Long idAsistencia) {
-        this.idAsistencia = idAsistencia;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Empleados getEmpleado() {

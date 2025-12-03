@@ -24,7 +24,7 @@ public class UsuarioAdmin {
     private String apellido;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "rol_id", nullable = false)
+    @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
     @Column(columnDefinition = "TINYINT(1) DEFAULT 1")

@@ -1,8 +1,12 @@
 # IDEs
 .idea/
+*.iml
 .vscode/
+.classpath
+.project
+.settings/
 
-# Gradle
+# Gradle (ya no usado, pero por si acaso)
 .gradle/
 build/
 out/
@@ -11,6 +15,17 @@ out/
 target/
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+# Node modules
+node_modules/
+package-lock.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Virtual machine crash logs
 hs_err_pid*
 replay_pid*

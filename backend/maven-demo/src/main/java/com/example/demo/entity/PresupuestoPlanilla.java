@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public class PresupuestoPlanilla {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idPresupuesto;
+    private Long id;
 
     private String periodo;
     private BigDecimal montoTotal;
@@ -23,12 +23,12 @@ public class PresupuestoPlanilla {
     // Getters y Setters
 
 
-    public Long getIdPresupuesto() {
-        return this.idPresupuesto;
+    public Long getId() {
+        return this.id;
     }
 
-    public void setIdPresupuesto(Long idPresupuesto) {
-        this.idPresupuesto = idPresupuesto;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getPeriodo() {

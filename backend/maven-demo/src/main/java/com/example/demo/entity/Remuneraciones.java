@@ -9,14 +9,14 @@ import java.time.LocalDateTime;
 public class Remuneraciones {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idRemuneracion;
+    private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "idEmpleado")
+    @JoinColumn(name = "empleado_id")
     private Empleados empleado;
 
     @ManyToOne
-    @JoinColumn(name = "idPlanilla")
+    @JoinColumn(name = "planilla_id")
     private Planillas planilla;
 
     private BigDecimal sueldoBruto;
@@ -33,12 +33,12 @@ public class Remuneraciones {
     // Getters y Setters
 
 
-    public Long getIdRemuneracion() {
-        return this.idRemuneracion;
+    public Long getId() {
+        return this.id;
     }
 
-    public void setIdRemuneracion(Long idRemuneracion) {
-        this.idRemuneracion = idRemuneracion;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Empleados getEmpleado() {

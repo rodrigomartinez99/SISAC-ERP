@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public class Planillas {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idPlanilla;
+    private Long id;
 
     private String periodo;
     private String estado;
@@ -17,11 +17,11 @@ public class Planillas {
     private BigDecimal totalNeto;
 
     @ManyToOne
-    @JoinColumn(name = "idPresupuesto")
+    @JoinColumn(name = "presupuesto_id")
     private PresupuestoPlanilla presupuestoPlanilla;
 
     @ManyToOne
-    @JoinColumn(name = "idPago")
+    @JoinColumn(name = "pago_id")
     private Pagos pago;
 
     @Column(updatable = false)
@@ -33,12 +33,12 @@ public class Planillas {
     // Getters y Setters
 
 
-    public Long getIdPlanilla() {
-        return this.idPlanilla;
+    public Long getId() {
+        return this.id;
     }
 
-    public void setIdPlanilla(Long idPlanilla) {
-        this.idPlanilla = idPlanilla;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getPeriodo() {

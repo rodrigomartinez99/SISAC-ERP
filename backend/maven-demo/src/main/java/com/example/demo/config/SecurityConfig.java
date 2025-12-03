@@ -59,10 +59,25 @@ public class SecurityConfig {
                 .requestMatchers("/api/public/**").permitAll()
                 
                 // --- Reglas de Negocio por Rol ---
+                
+                // Módulo Tributario - Solo ADMIN_TRIBUTARIO
                 .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/tax/closing/descargar/**").hasRole("ADMIN_TRIBUTARIO")
                 .requestMatchers("/api/tax/**").hasRole("ADMIN_TRIBUTARIO")
-                // .requestMatchers("/api/payroll/**").hasRole("GESTOR_PLANILLA")
-                // .requestMatchers("/api/hiring/**").hasRole("GESTOR_CONTRATACION")
+                
+                // Módulo de Planillas - Solo GESTOR_PLANILLA
+                .requestMatchers("/api/empleados/**").hasRole("GESTOR_PLANILLA")
+                .requestMatchers("/api/asistencias/**").hasRole("GESTOR_PLANILLA")
+                .requestMatchers("/api/presupuestos/**").hasRole("GESTOR_PLANILLA")
+                .requestMatchers("/api/planillas/**").hasRole("GESTOR_PLANILLA")
+                .requestMatchers("/api/pagos/**").hasRole("GESTOR_PLANILLA")
+                .requestMatchers("/api/boletas/**").hasRole("GESTOR_PLANILLA")
+                
+                // Módulo de Contratación - Solo GESTOR_CONTRATACION
+                // .requestMatchers("/api/convocatorias/**").hasRole("GESTOR_CONTRATACION")
+                // .requestMatchers("/api/postulantes/**").hasRole("GESTOR_CONTRATACION")
+                // .requestMatchers("/api/entrevistas/**").hasRole("GESTOR_CONTRATACION")
+                // .requestMatchers("/api/cvs/**").hasRole("GESTOR_CONTRATACION")
+                
                 // ---------------------------------
 
                 .anyRequest().authenticated()

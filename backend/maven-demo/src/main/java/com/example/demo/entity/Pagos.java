@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class Pagos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idPago;
+    private Long id;
 
     private LocalDate fechaPago;
     private BigDecimal monto;
@@ -25,12 +25,12 @@ public class Pagos {
     // Getters y Setters
 
 
-    public Long getIdPago() {
-        return this.idPago;
+    public Long getId() {
+        return this.id;
     }
 
-    public void setIdPago(Long idPago) {
-        this.idPago = idPago;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public LocalDate getFechaPago() {
