@@ -55,12 +55,18 @@ public class SecurityConfig {
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authz -> authz
-                .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/public/**").permitAll()
-                
-                // --- Reglas de Negocio por Rol ---
+                    .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
+                    .requestMatchers("/api/auth/**").permitAll()
+                    .requestMatchers("/api/public/**").permitAll()
+                    
+                // --- NUEVAS REGLAS ---
+                // Monitoreo (Actuator) - Solo Admin
+                .requestMatchers("/actuator/**").hasRole("ADMIN_TRIBUTARIO") 
+                // CRUD Usuarios - Solo Admin
+                .requestMatchers("/api/usuarios/**").hasRole("ADMIN_TRIBUTARIO")
+                    
+                // --- Reglas existentes ---
                 .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/tax/closing/descargar/**").hasRole("ADMIN_TRIBUTARIO")
-                .requestMatchers("/api/tax/**").hasRole("ADMIN_TRIBUTARIO")
                 // .requestMatchers("/api/payroll/**").hasRole("GESTOR_PLANILLA")
                 // .requestMatchers("/api/hiring/**").hasRole("GESTOR_CONTRATACION")
                 // ---------------------------------
