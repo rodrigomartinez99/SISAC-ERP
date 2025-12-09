@@ -9,14 +9,15 @@ import java.time.LocalDateTime;
 public class Remuneraciones {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idRemuneracion")
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "empleado_id")
+    @JoinColumn(name = "idEmpleado")
     private Empleados empleado;
 
     @ManyToOne
-    @JoinColumn(name = "planilla_id")
+    @JoinColumn(name = "idPlanilla")
     private Planillas planilla;
 
     private BigDecimal sueldoBruto;
@@ -24,7 +25,7 @@ public class Remuneraciones {
     private BigDecimal aportes;
     private BigDecimal sueldoNeto;
 
-    @Column(updatable = false)
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
     
     @PrePersist

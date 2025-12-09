@@ -39,13 +39,25 @@ const getNavigationByRole = (role) => {
       return [
         { 
           name: 'Dashboard', 
-          path: '/dashboard', 
+          path: '/payroll/dashboard', 
           icon: '📊',
           permission: 'view_dashboard'
         },
         { 
+          name: 'Gestión de Planillas', 
+          path: '/payroll/list', 
+          icon: '📋',
+          permission: 'view_dashboard'
+        },
+        { 
+          name: 'Gestión Empleados', 
+          path: '/masters/employees', 
+          icon: '👥',
+          permission: 'manage_legal_parameters'
+        },
+        { 
           name: 'Maestros y Config', 
-          path: '/masters/legal-parameters', 
+          path: '/masters/config', 
           icon: '⚙️',
           permission: 'manage_legal_parameters'
         },
@@ -65,13 +77,13 @@ const getNavigationByRole = (role) => {
           name: 'Resumen Planilla', 
           path: '/reports/summary', 
           icon: '📊',
-          permission: 'generate_payroll_reports'
+          permission: 'view_dashboard'
         },
         { 
           name: 'Archivos de Salida', 
           path: '/reports/output-files', 
           icon: '💾',
-          permission: 'manage_output_files'
+          permission: 'view_dashboard'
         }
       ];
     
@@ -132,7 +144,14 @@ const Sidebar = () => {
     const { user, userRole } = useAuth();
     const location = useLocation();
     
+    console.log('🔐 [Sidebar] Usuario:', user);
+    console.log('🔐 [Sidebar] Rol:', userRole);
+    
     const navigation = getNavigationByRole(userRole);
+    console.log('🔐 [Sidebar] Items de navegación:', navigation);
+    navigation.forEach((item, index) => {
+        console.log(`  ${index + 1}. ${item.name} - ${item.path} - Permiso: ${item.permission}`);
+    });
 
     const toggleSidebar = () => {
         setIsCollapsed(!isCollapsed);

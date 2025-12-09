@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -119,9 +120,10 @@ public class PlanillasService {
             totalNeto = totalNeto.add(remuneracion.getSueldoNeto());
         }
 
-        // Actualizar totales de planilla
+        // Actualizar totales de planilla y cambiar estado
         planilla.setTotalBruto(totalBruto);
         planilla.setTotalNeto(totalNeto);
+        planilla.setEstado("CALCULADO");
         planillasRepository.save(planilla);
 
         return obtenerPorId(planillaId);
@@ -190,8 +192,8 @@ public class PlanillasService {
         Planillas planilla = planillasRepository.findById(planillaId)
                 .orElseThrow(() -> new RuntimeException("Planilla no encontrada con ID: " + planillaId));
 
-        if (!"BORRADOR".equals(planilla.getEstado())) {
-            throw new RuntimeException("Solo se pueden aprobar planillas en estado BORRADOR");
+        if (!"CALCULADO".equals(planilla.getEstado())) {
+            throw new RuntimeException("Solo se pueden aprobar planillas en estado CALCULADO");
         }
 
         // Validar que existan remuneraciones
@@ -260,16 +262,103 @@ public class PlanillasService {
     }
 
     private RemuneracionDTO convertRemuneracionToDTO(Remuneraciones remuneracion) {
-        return new RemuneracionDTO(
-                remuneracion.getId(),
-                remuneracion.getEmpleado().getId(),
-                remuneracion.getEmpleado().getNombre(),
-                remuneracion.getEmpleado().getDni(),
-                remuneracion.getPlanilla().getId(),
-                remuneracion.getSueldoBruto(),
-                remuneracion.getDescuentos(),
-                remuneracion.getAportes(),
-                remuneracion.getSueldoNeto()
-        );
+        Empleados empleado = remuneracion.getEmpleado();
+        RemuneracionDTO dto;
+        
+        // Protección contra empleados eliminados físicamente
+        if (empleado == null) {
+            dto = new RemuneracionDTO(
+                    remuneracion.getId(),
+                    null,
+                    "[EMPLEADO ELIMINADO]",
+                    "N/A",
+                    "N/A",
+                    remuneracion.getPlanilla().getId(),
+                    remuneracion.getSueldoBruto(),
+                    remuneracion.getDescuentos(),
+                    remuneracion.getAportes(),
+                    remuneracion.getSueldoNeto()
+            );
+        } else {
+            dto = new RemuneracionDTO(
+                    remuneracion.getId(),
+                    empleado.getId(),
+                    empleado.getNombre(),
+                    empleado.getDni(),
+                    empleado.getPuesto(),
+                    remuneracion.getPlanilla().getId(),
+                    remuneracion.getSueldoBruto(),
+                    remuneracion.getDescuentos(),
+                    remuneracion.getAportes(),
+                    remuneracion.getSueldoNeto()
+            );
+            
+            // Agregar novedades (asistencias) del periodo
+            String periodo = remuneracion.getPlanilla().getPeriodo();
+            System.out.println("🔍 Buscando asistencias para empleado ID: " + empleado.getId() + " - Periodo: " + periodo);
+            
+            List<Asistencias> asistencias = asistenciasRepository.findByEmpleadoIdAndPeriodo(
+                    empleado.getId(), 
+                    periodo
+            );
+            
+            System.out.println("📊 Asistencias encontradas: " + asistencias.size());
+            
+            List<RemuneracionDTO.NovedadDTO> novedades = new ArrayList<>();
+            
+            for (Asistencias asist : asistencias) {
+                System.out.println("  📅 Asistencia - Fecha: " + asist.getFecha() + 
+                                   ", HorasExtra: " + asist.getHorasExtra() + 
+                                   ", Tardanza: " + asist.getTardanza() + 
+                                   ", Ausencia: " + asist.getAusencia());
+                
+                // Horas extra como INGRESO
+                if (asist.getHorasExtra() != null && asist.getHorasExtra().compareTo(BigDecimal.ZERO) > 0) {
+                    BigDecimal sueldoBase = empleado.getSueldoBase();
+                    BigDecimal tarifaHora = sueldoBase.divide(HORAS_MENSUALES, 2, RoundingMode.HALF_UP);
+                    BigDecimal montoHorasExtra = tarifaHora.multiply(TASA_HORA_EXTRA).multiply(asist.getHorasExtra());
+                    
+                    System.out.println("  ✅ Agregando INGRESO: Horas extras (" + asist.getHorasExtra() + "h) = S/ " + montoHorasExtra);
+                    
+                    novedades.add(new RemuneracionDTO.NovedadDTO(
+                            "Horas extras (" + asist.getHorasExtra() + "h)",
+                            "INGRESO",
+                            montoHorasExtra.setScale(2, RoundingMode.HALF_UP)
+                    ));
+                }
+                
+                // Tardanzas como DESCUENTO
+                if (asist.getTardanza() != null && asist.getTardanza().compareTo(BigDecimal.ZERO) > 0) {
+                    BigDecimal sueldoBase = empleado.getSueldoBase();
+                    BigDecimal tarifaHora = sueldoBase.divide(HORAS_MENSUALES, 2, RoundingMode.HALF_UP);
+                    BigDecimal montoTardanza = tarifaHora.multiply(asist.getTardanza());
+                    
+                    novedades.add(new RemuneracionDTO.NovedadDTO(
+                            "Tardanzas (" + asist.getTardanza() + "h)",
+                            "DESCUENTO",
+                            montoTardanza.setScale(2, RoundingMode.HALF_UP)
+                    ));
+                }
+                
+                // Ausencias como DESCUENTO
+                if (asist.getAusencia() != null && asist.getAusencia()) {
+                    BigDecimal sueldoBase = empleado.getSueldoBase();
+                    BigDecimal tarifaHora = sueldoBase.divide(HORAS_MENSUALES, 2, RoundingMode.HALF_UP);
+                    BigDecimal montoAusencia = tarifaHora.multiply(new BigDecimal("8"));
+                    
+                    novedades.add(new RemuneracionDTO.NovedadDTO(
+                            "Ausencia (1 día)",
+                            "DESCUENTO",
+                            montoAusencia.setScale(2, RoundingMode.HALF_UP)
+                    ));
+                }
+            }
+            
+            System.out.println("📦 Total novedades agregadas al DTO: " + novedades.size());
+            
+            dto.setNovedades(novedades);
+        }
+        
+        return dto;
     }
 }

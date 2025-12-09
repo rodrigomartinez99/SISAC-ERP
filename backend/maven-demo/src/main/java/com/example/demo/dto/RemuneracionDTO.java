@@ -1,28 +1,53 @@
 package com.example.demo.dto;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.ArrayList;
 
 public class RemuneracionDTO {
     private Long id;
     private Long empleadoId;
     private String empleadoNombre;
     private String empleadoDni;
+    private String empleadoPuesto;
     private Long planillaId;
     private BigDecimal sueldoBruto;
     private BigDecimal descuentos;
     private BigDecimal aportes;
     private BigDecimal sueldoNeto;
+    private List<NovedadDTO> novedades = new ArrayList<>();
+    
+    // Inner class para las novedades
+    public static class NovedadDTO {
+        private String concepto;
+        private String tipo; // INGRESO o DESCUENTO
+        private BigDecimal monto;
+        
+        public NovedadDTO(String concepto, String tipo, BigDecimal monto) {
+            this.concepto = concepto;
+            this.tipo = tipo;
+            this.monto = monto;
+        }
+        
+        public String getConcepto() { return concepto; }
+        public void setConcepto(String concepto) { this.concepto = concepto; }
+        public String getTipo() { return tipo; }
+        public void setTipo(String tipo) { this.tipo = tipo; }
+        public BigDecimal getMonto() { return monto; }
+        public void setMonto(BigDecimal monto) { this.monto = monto; }
+    }
 
     // Constructors
     public RemuneracionDTO() {}
 
     public RemuneracionDTO(Long id, Long empleadoId, String empleadoNombre, String empleadoDni,
-                          Long planillaId, BigDecimal sueldoBruto, BigDecimal descuentos, 
-                          BigDecimal aportes, BigDecimal sueldoNeto) {
+                          String empleadoPuesto, Long planillaId, BigDecimal sueldoBruto, 
+                          BigDecimal descuentos, BigDecimal aportes, BigDecimal sueldoNeto) {
         this.id = id;
         this.empleadoId = empleadoId;
         this.empleadoNombre = empleadoNombre;
         this.empleadoDni = empleadoDni;
+        this.empleadoPuesto = empleadoPuesto;
         this.planillaId = planillaId;
         this.sueldoBruto = sueldoBruto;
         this.descuentos = descuentos;
@@ -63,6 +88,14 @@ public class RemuneracionDTO {
         this.empleadoDni = empleadoDni;
     }
 
+    public String getEmpleadoPuesto() {
+        return empleadoPuesto;
+    }
+
+    public void setEmpleadoPuesto(String empleadoPuesto) {
+        this.empleadoPuesto = empleadoPuesto;
+    }
+
     public Long getPlanillaId() {
         return planillaId;
     }
@@ -101,5 +134,13 @@ public class RemuneracionDTO {
 
     public void setSueldoNeto(BigDecimal sueldoNeto) {
         this.sueldoNeto = sueldoNeto;
+    }
+    
+    public List<NovedadDTO> getNovedades() {
+        return novedades;
+    }
+    
+    public void setNovedades(List<NovedadDTO> novedades) {
+        this.novedades = novedades;
     }
 }

@@ -14,7 +14,12 @@ const PermissionGuard = ({
 
   // Verificar permisos individuales
   if (permission && !hasPermission(permission)) {
+    console.log(`🚫 [PermissionGuard] Permiso denegado: "${permission}"`);
     return fallback;
+  }
+  
+  if (permission) {
+    console.log(`✅ [PermissionGuard] Permiso concedido: "${permission}"`);
   }
 
   // Verificar lista de permisos

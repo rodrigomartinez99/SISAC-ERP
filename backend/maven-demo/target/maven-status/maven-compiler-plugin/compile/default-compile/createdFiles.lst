@@ -8,6 +8,7 @@ com\example\demo\service\PresupuestoService.class
 com\example\demo\dto\VentaRequestDTO$ItemVentaDTO.class
 com\example\demo\entity\ComprobanteDetalles.class
 com\example\demo\repository\EmpleadosRepository.class
+com\example\demo\dto\RemuneracionDTO$NovedadDTO.class
 com\example\demo\repository\RegistroVentasRepository.class
 com\example\demo\controller\AuthController.class
 com\example\demo\dto\CompraRequestDTO.class
@@ -42,6 +43,7 @@ com\example\demo\dto\RemuneracionDTO.class
 com\example\demo\entity\Convocatorias.class
 com\example\demo\repository\AsistenciasRepository.class
 com\example\demo\controller\AsistenciasController.class
+com\example\demo\service\PlanillaExportService.class
 com\example\demo\service\CierreMensualService.class
 com\example\demo\dto\AsistenciaDTO.class
 com\example\demo\dto\PresupuestoDTO.class

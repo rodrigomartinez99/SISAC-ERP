@@ -1,9 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useAuth } from '../hooks/useAuth';
-import { Navigate } from 'react-router-dom';
-import Sidebar from '../components/ui/SideBar';
-import TopNavbar from '../components/ui/TopNavbar';
-import ProtectedRoute from '../components/auth/ProtectedRoute';
+import React, { useState } from 'react';
+import { LayoutDashboard, Settings, Calculator, BarChart3, User, LogOut, ChevronDown } from 'lucide-react';
 import '../components/ui/Sidebar.css';
 import '../components/ui/TopNavbar.css';
 

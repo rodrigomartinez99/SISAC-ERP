@@ -78,10 +78,12 @@ public class EmpleadosService {
 
     @Transactional
     public void eliminar(Long id) {
-        if (!empleadosRepository.existsById(id)) {
-            throw new RuntimeException("Empleado no encontrado con ID: " + id);
-        }
-        empleadosRepository.deleteById(id);
+        Empleados empleado = empleadosRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Empleado no encontrado con ID: " + id));
+        
+        // Soft delete: cambiar estado a ELIMINADO en lugar de borrar físicamente
+        empleado.setEstado("ELIMINADO");
+        empleadosRepository.save(empleado);
     }
 
     @Transactional

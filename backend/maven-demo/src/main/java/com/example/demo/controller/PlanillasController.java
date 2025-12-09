@@ -2,8 +2,12 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.PlanillaDTO;
 import com.example.demo.service.PlanillasService;
+import com.example.demo.service.PlanillaExportService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +21,9 @@ public class PlanillasController {
 
     @Autowired
     private PlanillasService planillasService;
+
+    @Autowired
+    private PlanillaExportService exportService;
 
     @GetMapping
     public ResponseEntity<List<PlanillaDTO>> listarTodas() {
@@ -118,6 +125,66 @@ public class PlanillasController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("error", "Error al eliminar planilla"));
+        }
+    }
+
+    // ========== ENDPOINTS DE EXPORTACIÓN ==========
+
+    @GetMapping("/{id}/exportar/plame")
+    public ResponseEntity<Resource> exportarPLAME(@PathVariable Long id) {
+        try {
+            Resource resource = exportService.exportarPLAME(id);
+            
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType("text/plain"))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                    .body(resource);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/{id}/exportar/banco")
+    public ResponseEntity<Resource> exportarBancoCSV(@PathVariable Long id) {
+        try {
+            Resource resource = exportService.exportarBanco(id);
+            
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType("text/csv"))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                    .body(resource);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/{id}/exportar/banco/excel")
+    public ResponseEntity<Resource> exportarBancoExcel(@PathVariable Long id) {
+        try {
+            Resource resource = exportService.exportarBancoExcel(id);
+            
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                    .body(resource);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/{id}/exportar/boletas/pdf")
+    public ResponseEntity<Resource> exportarBoletasPDF(@PathVariable Long id) {
+        try {
+            Resource resource = exportService.generarBoletasPDF(id);
+            
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType("application/pdf"))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                    .body(resource);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
         }
     }
 }

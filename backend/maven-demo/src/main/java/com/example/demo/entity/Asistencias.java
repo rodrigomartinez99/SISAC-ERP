@@ -10,19 +10,29 @@ import java.time.LocalDateTime;
 public class Asistencias {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idAsistencia")
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "empleado_id")
+    @JoinColumn(name = "idEmpleado")
     private Empleados empleado;
 
+    @Column(name = "fecha")
     private LocalDate fecha;
+    
+    @Column(name = "horasTrabajadas")
     private BigDecimal horasTrabajadas;
+    
+    @Column(name = "horasExtra")
     private BigDecimal horasExtra;
+    
+    @Column(name = "tardanza")
     private BigDecimal tardanza;
+    
+    @Column(name = "ausencia")
     private Boolean ausencia;
 
-    @Column(updatable = false)
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
     
     @PrePersist

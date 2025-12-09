@@ -75,6 +75,7 @@ public class BoletasPagoService {
                                 rem.getEmpleado().getId(),
                                 rem.getEmpleado().getNombre(),
                                 rem.getEmpleado().getDni(),
+                                rem.getEmpleado().getPuesto(),
                                 rem.getPlanilla().getId(),
                                 rem.getSueldoBruto(),
                                 rem.getDescuentos(),

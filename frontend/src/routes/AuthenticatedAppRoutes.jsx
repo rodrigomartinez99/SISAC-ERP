@@ -28,59 +28,79 @@ import ReportsPage from '../features/payroll/pages/ReportsPage';
 import TestConvocatorias from '../TestConvocatorias';
 import ConvocatoriasDashboardPage from '../features/convocatorias/pages/ConvocatoriasDashboardPage';
 
-// Componentes específicos de planilla - Temporalmente comentados para arreglar imports
-// import EmployeePayrollDetails from '../features/payroll/components/masters/EmployeePayrollDetails';
-// import LegalParametersTable from '../features/payroll/components/masters/LegalParametersTable';
-// import MonthlyNoveltyEntry from '../features/payroll/components/processes/MonthlyNoveltyEntry';
-// import PrePayrollReviewTable from '../features/payroll/components/processes/PrePayrollReviewTable';
-// import PayrollSummaryReportPage from '../features/payroll/components/reports/PayrollSummaryReportPage';
-// import OutputFilesPage from '../features/payroll/components/reports/OutputFilesPage';
+// Componentes específicos de planilla
+import EmployeeListPage from '../features/payroll/pages/EmployeeListPage';
+import EmployeeFormPage from '../features/payroll/pages/EmployeeFormPage';
+import EmployeeDetailPage from '../features/payroll/pages/EmployeeDetailPage';
+import EmployeePayrollDetails from '../features/payroll/components/masters/EmployeePayrollDetails';
+import LegalParametersTable from '../features/payroll/components/masters/LegalParametersTable';
+import MonthlyNoveltyEntry from '../features/payroll/components/processes/MonthlyNoveltyEntry';
+import PrePayrollReviewTable from '../features/payroll/components/processes/PrePayrollReviewTable';
+import PayrollSummaryReportPage from '../features/payroll/components/reports/PayrollSummaryReportPage';
+import OutputFilesPage from '../features/payroll/components/reports/OutputFilesPage';
+import PayrollListPage from '../features/payroll/pages/PayrollListPage';
+import PayrollFormPage from '../features/payroll/pages/PayrollFormPage';
+import PayrollDetailPage from '../features/payroll/pages/PayrollDetailPage';
 
 // Rutas del módulo tributario
 const TaxRoutes = () => (
   <Routes>
-    <Route path="/config" element={<TaxConfigPage />} />
-    <Route path="/daily" element={<DailyOpsPage />} />
-    <Route path="/closing" element={<MonthlyClosingPage />} />
+    <Route index element={<Navigate to="config" replace />} />
+    <Route path="config" element={<TaxConfigPage />} />
+    <Route path="daily" element={<DailyOpsPage />} />
+    <Route path="closing" element={<MonthlyClosingPage />} />
   </Routes>
 );
 
 // Rutas del módulo de planilla
 const PayrollRoutes = () => (
   <Routes>
-    <Route path="/novelties" element={<MonthlyNoveltyEntry />} />
-    <Route path="/review" element={<PrePayrollReviewTable />} />
-    <Route path="/liquidation" element={<LiquidationProcessPage />} />
-    <Route path="/dashboard" element={<PayrollDashboardPage />} />
+    <Route index element={<Navigate to="dashboard" replace />} />
+    <Route path="dashboard" element={<PayrollDashboardPage />} />
+    <Route path="list" element={<PayrollListPage />} />
+    <Route path="new" element={<PayrollFormPage />} />
+    <Route path=":id" element={<PayrollDetailPage />} />
+    <Route path=":id/edit" element={<PayrollFormPage />} />
+    <Route path="novelties" element={<MonthlyNoveltyEntry />} />
+    <Route path="review" element={<PrePayrollReviewTable />} />
+    <Route path="liquidation" element={<LiquidationProcessPage />} />
+    <Route path="outputs" element={<OutputFilesPage />} />
   </Routes>
 );
 
-// Rutas de maestros y configuración - Temporalmente simplificadas
+// Rutas de maestros y configuración
 const MastersRoutes = () => (
   <Routes>
-    <Route path="/legal-parameters" element={<div>Parámetros Legales - En desarrollo</div>} />
-    <Route path="/employee-payroll" element={<div>Detalles de Planilla - En desarrollo</div>} />
-    <Route path="/config" element={<MastersConfigPage />} />
+    <Route index element={<Navigate to="config" replace />} />
+    <Route path="legal-parameters" element={<LegalParametersTable />} />
+    <Route path="employee-payroll" element={<EmployeePayrollDetails />} />
+    <Route path="config" element={<MastersConfigPage />} />
+    <Route path="employees" element={<EmployeeListPage />} />
+    <Route path="employees/new" element={<EmployeeFormPage />} />
+    <Route path="employees/:id" element={<EmployeeDetailPage />} />
+    <Route path="employees/:id/edit" element={<EmployeeFormPage />} />
   </Routes>
 );
 
-// Rutas de reportes - Temporalmente simplificadas
+// Rutas de reportes
 const ReportsRoutes = () => (
   <Routes>
-    <Route path="/summary" element={<div>Reporte Resumen - En desarrollo</div>} />
-    <Route path="/output-files" element={<div>Archivos de Salida - En desarrollo</div>} />
-    <Route path="/payroll" element={<ReportsPage />} />
+    <Route index element={<Navigate to="summary" replace />} />
+    <Route path="summary" element={<PayrollSummaryReportPage />} />
+    <Route path="output-files" element={<OutputFilesPage />} />
+    <Route path="payroll" element={<ReportsPage />} />
   </Routes>
 );
 
 // Rutas de contratación (placeholder para futura implementación)
 const HiringRoutes = () => (
   <Routes>
-    <Route path="/convocatorias" element={<ConvocatoriasDashboardPage />} />
-    <Route path="/candidates" element={<div>Gestión de Postulantes - En desarrollo</div>} />
-    <Route path="/interviews" element={<div>Gestión de Entrevistas - En desarrollo</div>} />
-    <Route path="/employees" element={<div>Gestión de Empleados - En desarrollo</div>} />
-    <Route path="/reports" element={<div>Reportes de Contratación - En desarrollo</div>} />
+    <Route index element={<Navigate to="convocatorias" replace />} />
+    <Route path="convocatorias" element={<ConvocatoriasDashboardPage />} />
+    <Route path="candidates" element={<div>Gestión de Postulantes - En desarrollo</div>} />
+    <Route path="interviews" element={<div>Gestión de Entrevistas - En desarrollo</div>} />
+    <Route path="employees" element={<div>Gestión de Empleados - En desarrollo</div>} />
+    <Route path="reports" element={<div>Reportes de Contratación - En desarrollo</div>} />
   </Routes>
 );
 

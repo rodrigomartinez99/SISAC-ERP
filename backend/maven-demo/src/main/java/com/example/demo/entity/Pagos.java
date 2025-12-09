@@ -10,13 +10,14 @@ import java.time.LocalDateTime;
 public class Pagos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idPago")
     private Long id;
 
     private LocalDate fechaPago;
     private BigDecimal monto;
     private String estado;
 
-    @Column(updatable = false)
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
     
     @PrePersist
