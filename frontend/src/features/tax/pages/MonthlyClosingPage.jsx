@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useApiClient } from "../../../api/tax";
-import { useAuth } from "../../../hooks/useAuth"; // Importa useAuth para obtener el token
+import { useAuth } from "../../../hooks/useAuth";
+import '../styles/MonthlyClosingPage.css';
 
 export default function MonthlyClosingPage() {
   const [periodo, setPeriodo] = useState(new Date().toISOString().slice(0, 7).replace("-","")); // "YYYYMM"
@@ -105,35 +106,35 @@ export default function MonthlyClosingPage() {
   // --------------------------------------------------
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold text-indigo-700 mb-6">
-        Cierre Mensual – Declaraciones Tributarias
+    <div className="monthly-closing-page">
+      <h1>
+        Cierre Mensual y Generación de Formularios PDT (621)
       </h1>
 
       {message.text && (
-        <div className={`p-4 mb-4 rounded ${message.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+        <div className={`message-box ${message.type === 'success' ? 'success' : 'error'}`}>
           {message.text}
         </div>
       )}
 
       {/* --- Paso 1: Iniciar Cierre --- */}
-      <div className="bg-white shadow rounded-lg p-6 mb-6">
-        <h2 className="font-semibold text-lg mb-4">
+      <div className="control-panel">
+        <h2>
           Consolidación y Cálculo de IGV
         </h2>
-        <div className="flex gap-4 items-center">
+        <div className="control-row">
+          <label>Periodo:</label>
           <input
             type="text"
-            className="border p-2 rounded"
-            placeholder="Periodo (YYYYMM)"
+            placeholder="YYYYMM"
             value={periodo}
             onChange={(e) => setPeriodo(e.target.value)}
-            disabled={loading || downloading} // Deshabilitar durante carga/descarga
+            disabled={loading || downloading}
           />
           <button
-            className="px-4 py-2 bg-indigo-600 text-white rounded disabled:bg-gray-400"
+            className="btn-primary"
             onClick={handleIniciarCierre}
-            disabled={loading || downloading} // Deshabilitar durante carga/descarga
+            disabled={loading || downloading}
           >
             {loading ? "Calculando..." : "Ejecutar Cálculo"}
           </button>
@@ -142,71 +143,73 @@ export default function MonthlyClosingPage() {
 
       {/* --- Paso 2 y 3: Revisión y Descarga --- */}
       {declaracion && (
-        <div className="animate-fadeIn">
+        <div>
           {/* Resumen */}
-          <div className="bg-white shadow rounded-lg p-6 mb-6">
-            <h2 className="font-semibold text-lg mb-2">Resumen del Cálculo (ID: {declaracion.id})</h2>
-            <p className="mb-4">Estado: <strong className={`font-medium ${
-                declaracion.estado === 'APROBADO_LISTO_PRESENTAR' ? 'text-green-600' :
-                declaracion.estado === 'RECHAZADO_AJUSTES' ? 'text-red-600' : 'text-yellow-600'
-            }`}>{declaracion.estado}</strong></p>
-            <div className="grid grid-cols-2 gap-4">
-                <p>IGV Débito: <span className="font-mono">S/ {declaracion.igvDebito?.toFixed(2) ?? 'N/A'}</span></p>
-                <p>IGV Crédito: <span className="font-mono">S/ {declaracion.igvCredito?.toFixed(2) ?? 'N/A'}</span></p>
-                <p className="font-bold">IGV Neto: <span className="font-mono">S/ {declaracion.igvNeto?.toFixed(2) ?? 'N/A'}</span></p>
-                <p className="font-bold">Renta: <span className="font-mono">S/ {declaracion.rentaPagoCuenta?.toFixed(2) ?? 'N/A'}</span></p>
+          <div className="declaration-card">
+            <h2>Resumen del Cálculo</h2>
+            <p><strong>ID:</strong> {declaracion.id}</p>
+            <p><strong>Estado:</strong> <span className={`status-badge ${
+                declaracion.estado === 'APROBADO_LISTO_PRESENTAR' ? 'approved' :
+                declaracion.estado === 'RECHAZADO_AJUSTES' ? 'rejected' : 'pending'
+            }`}>{declaracion.estado}</span></p>
+            
+            <h3>Resumen de Impuestos</h3>
+            <div className="summary-grid">
+                <div className="summary-item"><strong>IGV Débito</strong><span>S/ {declaracion.igvDebito?.toFixed(2) ?? 'N/A'}</span></div>
+                <div className="summary-item"><strong>IGV Crédito</strong><span>S/ {declaracion.igvCredito?.toFixed(2) ?? 'N/A'}</span></div>
+                <div className="summary-item"><strong>IGV Neto</strong><span>S/ {declaracion.igvNeto?.toFixed(2) ?? 'N/A'}</span></div>
+                <div className="summary-item"><strong>Renta</strong><span>S/ {declaracion.rentaPagoCuenta?.toFixed(2) ?? 'N/A'}</span></div>
             </div>
-          </div>
 
-          {/* Formularios y Reportes - Ahora usan botones y handleDownload */}
-          <div className="bg-white shadow rounded-lg p-6 mb-6">
-            <h2 className="font-semibold text-lg mb-4">
-              Formularios y Reportes Exportables
-            </h2>
-            <div className="space-y-2">
-              <button
-                onClick={() => handleDownload('borrador', `BorradorCalculo_${declaracion.periodo}.xlsx`)}
-                disabled={downloading}
-                className="text-indigo-600 hover:underline disabled:text-gray-400 disabled:cursor-wait"
-              >
-                {downloading === 'borrador' ? 'Descargando...' : `BorradorCalculo_${declaracion.periodo}.xlsx`}
-              </button>
-              <br/>
-              <button
-                 onClick={() => handleDownload('form621', declaracion.form621Pdf || `Form621_${declaracion.periodo}.pdf`)}
-                 disabled={downloading}
-                 className="text-indigo-600 hover:underline disabled:text-gray-400 disabled:cursor-wait"
-              >
-                 {downloading === 'form621' ? 'Descargando...' : `${declaracion.form621Pdf || 'Form621.pdf'} (Form 621)`}
-              </button>
-              <br/>
-               <button
-                 onClick={() => handleDownload('resumen', declaracion.resumenIgvPdf || `ResumenIGV_${declaracion.periodo}.pdf`)}
-                 disabled={downloading}
-                 className="text-indigo-600 hover:underline disabled:text-gray-400 disabled:cursor-wait"
-               >
-                 {downloading === 'resumen' ? 'Descargando...' : `${declaracion.resumenIgvPdf || 'ResumenIGV.pdf'} (Resumen IGV)`}
-               </button>
-            </div>
-          </div>
+            
+            <h3>Formularios y Reportes Exportables</h3>
+            <ul className="file-list">
+              <li>
+                <strong>Borrador de Cálculo</strong>
+                <button
+                  onClick={() => handleDownload('borrador', `BorradorCalculo_${declaracion.periodo}.xlsx`)}
+                  disabled={downloading}
+                  className="btn-download"
+                >
+                  {downloading === 'borrador' ? 'Descargando...' : 'Descargar XLSX'}
+                </button>
+              </li>
+              <li>
+                <strong>Formulario 621 (PDT)</strong>
+                <button
+                   onClick={() => handleDownload('form621', declaracion.form621Pdf || `Form621_${declaracion.periodo}.pdf`)}
+                   disabled={downloading}
+                   className="btn-download"
+                >
+                   {downloading === 'form621' ? 'Descargando...' : 'Descargar PDF'}
+                </button>
+              </li>
+              <li>
+                <strong>Resumen IGV</strong>
+                <button
+                   onClick={() => handleDownload('resumen', declaracion.resumenIgvPdf || `ResumenIGV_${declaracion.periodo}.pdf`)}
+                   disabled={downloading}
+                   className="btn-download"
+                 >
+                   {downloading === 'resumen' ? 'Descargando...' : 'Descargar PDF'}
+                 </button>
+              </li>
+            </ul>
 
-          {/* Aprobación */}
-          <div className="bg-white shadow rounded-lg p-6">
-            <h2 className="font-semibold text-lg mb-4">
-              Revisión y Aprobación Final
-            </h2>
+            
+            <h3>Revisión y Aprobación Final</h3>
 
             {declaracion.estado === 'PENDIENTE_APROBACION' ? (
-              <div className="flex gap-4">
+              <div className="action-buttons">
                 <button
-                  className="px-4 py-2 bg-green-600 text-white rounded disabled:bg-gray-400"
+                  className="btn-approve"
                   onClick={() => handleAprobar(true)}
                   disabled={loading || downloading}
                 >
                   {loading ? 'Procesando...' : 'Aprobar'}
                 </button>
                 <button
-                  className="px-4 py-2 bg-red-600 text-white rounded disabled:bg-gray-400"
+                  className="btn-reject"
                   onClick={() => handleAprobar(false)}
                   disabled={loading || downloading}
                 >
@@ -217,12 +220,12 @@ export default function MonthlyClosingPage() {
                  <button
                     onClick={() => handleDownload('paquete', declaracion.paqueteZip || `PaqueteDeclaracion_${declaracion.periodo}.zip`)}
                     disabled={downloading}
-                    className="px-6 py-3 bg-blue-600 text-white rounded font-medium inline-block hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-wait"
+                    className="btn-submit-final"
                  >
                     {downloading === 'paquete' ? 'Descargando...' : 'Descargar PaqueteDeclaracion.zip'}
                  </button>
             ) : (
-                <p className="text-red-600 font-medium">Declaración Rechazada. Requiere ajustes.</p>
+                <p style={{color: '#991b1b', fontWeight: '600'}}>Declaración Rechazada. Requiere ajustes.</p>
             )}
           </div>
         </div>

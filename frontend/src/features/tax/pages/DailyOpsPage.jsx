@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useApiClient } from "../../../api/tax";
+import '../styles/DailyOpsPage.css';
 
 export default function DailyOpsPage() {
   // Estado Venta
@@ -83,67 +84,62 @@ export default function DailyOpsPage() {
   };
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold text-indigo-700 mb-6">
+    <div className="daily-ops-page">
+      <h1>
         Operación Diaria – Ventas y Compras
       </h1>
 
       {message.text && (
-        <div className={`p-4 mb-4 rounded ${message.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+        <div className={`message-box ${message.type === 'success' ? 'success' : 'error'}`}>
           <p>{message.text}</p>
           {message.file && <p>Archivo de error generado: {message.file}</p>}
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="operations-grid">
         {/* Registro de ventas */}
-        <form onSubmit={handleRegistrarVenta} className="bg-white shadow rounded-lg p-6">
-          <h2 className="font-semibold text-lg mb-4">Emisión de CPE (Venta)</h2>
+        <form onSubmit={handleRegistrarVenta} className="operation-card">
+          <h2>Emisión de CPE (Venta)</h2>
           <input
-            className="border p-2 rounded w-full mb-2"
             placeholder="Cliente (RUC/DNI)"
             value={ventaRuc}
             onChange={(e) => setVentaRuc(e.target.value)}
             required
           />
-          <h3 className="font-medium mt-2">Ítems:</h3>
+          <h3>Ítems:</h3>
           {items.map((item, index) => (
-            <div key={index} className="flex gap-2 mb-2">
+            <div key={index} className="item-row">
                 <input 
                     type="number"
-                    className="border p-2 rounded w-1/2"
                     placeholder="ID Producto"
                     value={item.productoId}
                     onChange={(e) => handleItemChange(index, 'productoId', e.target.value)}
                 />
                 <input
                     type="number"
-                    className="border p-2 rounded w-1/2"
                     placeholder="Cantidad"
                     value={item.cantidad}
                     onChange={(e) => handleItemChange(index, 'cantidad', e.target.value)}
                 />
             </div>
           ))}
-          <button type="button" onClick={handleAddItem} className="text-sm text-indigo-600 mb-4">+ Agregar ítem</button>
+          <button type="button" onClick={handleAddItem} className="add-item-btn">+ Agregar ítem</button>
           
-          <button type="submit" disabled={loading} className="w-full px-4 py-2 bg-indigo-600 text-white rounded disabled:bg-gray-400">
+          <button type="submit" disabled={loading} className="btn-submit primary">
             {loading ? "Registrando..." : "Generar CPE"}
           </button>
         </form>
 
         {/* Registro de compras */}
-        <form onSubmit={handleRegistrarCompra} className="bg-white shadow rounded-lg p-6">
-          <h2 className="font-semibold text-lg mb-4">Registro de Compras</h2>
+        <form onSubmit={handleRegistrarCompra} className="operation-card">
+          <h2>Registro de Compras</h2>
           <input
-            className="border p-2 rounded w-full mb-2"
             placeholder="Proveedor (RUC)"
             value={compraRuc}
             onChange={(e) => setCompraRuc(e.target.value)}
             required
           />
           <input
-            className="border p-2 rounded w-full mb-2"
             placeholder="Número Factura"
             value={compraFactura}
             onChange={(e) => setCompraFactura(e.target.value)}
@@ -152,19 +148,17 @@ export default function DailyOpsPage() {
           <input
             type="number"
             step="0.01"
-            className="border p-2 rounded w-full mb-2"
             placeholder="Monto Total (inc. IGV)"
             value={compraMonto}
             onChange={(e) => setCompraMonto(e.target.value)}
             required
           />
-          <label className="block text-sm text-gray-600 mb-2">Adjuntar XML/PDF (Opcional):</label>
+          <label>Adjuntar XML/PDF (Opcional):</label>
           <input
             type="file"
-            className="border p-2 rounded w-full mb-4"
             onChange={(e) => setCompraFile(e.target.files[0])}
           />
-          <button type="submit" disabled={loading} className="w-full px-4 py-2 bg-green-600 text-white rounded disabled:bg-gray-400">
+          <button type="submit" disabled={loading} className="btn-submit green">
             {loading ? "Registrando..." : "Registrar Compra"}
           </button>
         </form>

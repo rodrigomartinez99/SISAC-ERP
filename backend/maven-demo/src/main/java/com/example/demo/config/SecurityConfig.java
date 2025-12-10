@@ -72,11 +72,11 @@ public class SecurityConfig {
                 .requestMatchers("/api/pagos/**").hasRole("GESTOR_PLANILLA")
                 .requestMatchers("/api/boletas/**").hasRole("GESTOR_PLANILLA")
                 
-                // Módulo de Contratación - Solo GESTOR_CONTRATACION
-                // .requestMatchers("/api/convocatorias/**").hasRole("GESTOR_CONTRATACION")
-                // .requestMatchers("/api/postulantes/**").hasRole("GESTOR_CONTRATACION")
-                // .requestMatchers("/api/entrevistas/**").hasRole("GESTOR_CONTRATACION")
-                // .requestMatchers("/api/cvs/**").hasRole("GESTOR_CONTRATACION")
+                // Módulo de Convocatorias - Solo GESTOR_CONTRATACION
+                .requestMatchers("/api/convocatorias/**").hasRole("GESTOR_CONTRATACION")
+                .requestMatchers("/api/candidatos/**").hasRole("GESTOR_CONTRATACION")
+                .requestMatchers("/api/postulaciones/**").hasRole("GESTOR_CONTRATACION")
+                .requestMatchers("/api/entrevistas/**").hasRole("GESTOR_CONTRATACION")
                 
                 // ---------------------------------
 

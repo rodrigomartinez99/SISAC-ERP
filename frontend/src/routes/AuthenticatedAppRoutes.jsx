@@ -25,8 +25,10 @@ import PayrollDashboardPage from '../features/payroll/pages/PayrollDashboardPage
 import ReportsPage from '../features/payroll/pages/ReportsPage';
 
 // Módulo Convocatorias (GESTOR_CONTRATACION)
-import TestConvocatorias from '../TestConvocatorias';
-import ConvocatoriasDashboardPage from '../features/convocatorias/pages/ConvocatoriasDashboardPage';
+import ConvocatoriasListPage from '../features/convocatorias/pages/ConvocatoriasListPage';
+import CandidatosListPage from '../features/convocatorias/pages/CandidatosListPage';
+import PostulacionesListPage from '../features/convocatorias/pages/PostulacionesListPage';
+import EntrevistasListPage from '../features/convocatorias/pages/EntrevistasListPage';
 
 // Componentes específicos de planilla
 import EmployeeListPage from '../features/payroll/pages/EmployeeListPage';
@@ -92,15 +94,14 @@ const ReportsRoutes = () => (
   </Routes>
 );
 
-// Rutas de contratación (placeholder para futura implementación)
+// Rutas de contratación
 const HiringRoutes = () => (
   <Routes>
     <Route index element={<Navigate to="convocatorias" replace />} />
-    <Route path="convocatorias" element={<ConvocatoriasDashboardPage />} />
-    <Route path="candidates" element={<div>Gestión de Postulantes - En desarrollo</div>} />
-    <Route path="interviews" element={<div>Gestión de Entrevistas - En desarrollo</div>} />
-    <Route path="employees" element={<div>Gestión de Empleados - En desarrollo</div>} />
-    <Route path="reports" element={<div>Reportes de Contratación - En desarrollo</div>} />
+    <Route path="convocatorias" element={<ConvocatoriasListPage />} />
+    <Route path="candidatos" element={<CandidatosListPage />} />
+    <Route path="postulaciones" element={<PostulacionesListPage />} />
+    <Route path="entrevistas" element={<EntrevistasListPage />} />
   </Routes>
 );
 

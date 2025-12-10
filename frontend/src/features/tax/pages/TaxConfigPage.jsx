@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useApiClient } from "@api/tax";
+import '../styles/TaxConfigPage.css';
 
 export default function TaxConfigPage() {
   const [step, setStep] = useState(1); // 1: Perfil, 2: Parámetros, 3: Catálogo
@@ -123,35 +124,35 @@ export default function TaxConfigPage() {
       });
   };
   
-  if (loading && !configStatus.contribuyente) return <p>Cargando configuración...</p>;
+  if (loading && !configStatus.contribuyente) return <p className="loading-text">Cargando configuración...</p>;
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold text-indigo-700 mb-6">
+    <div className="tax-config-page">
+      <h1>
         Configuración Tributaria – Perfil del Contribuyente
       </h1>
 
       {message.text && (
-        <div className={`p-4 mb-4 rounded ${message.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+        <div className={`message-box ${message.type === 'success' ? 'success' : 'error'}`}>
           {message.text}
         </div>
       )}
 
       {/* Navegación por Pasos */}
-      <div className="mb-4 border-b">
-        <button onClick={() => setStep(1)} className={`py-2 px-4 ${step === 1 ? 'border-b-2 border-indigo-500 font-medium' : 'text-gray-500'}`}>
+      <div className="step-navigation">
+        <button onClick={() => setStep(1)} className={`step-button ${step === 1 ? 'active' : ''}`}>
           Paso 1: Perfil Contribuyente
         </button>
-        <button onClick={() => setStep(2)} disabled={!configStatus.contribuyente} className={`py-2 px-4 ${step === 2 ? 'border-b-2 border-indigo-500 font-medium' : 'text-gray-500'} disabled:opacity-50`}>
+        <button onClick={() => setStep(2)} disabled={!configStatus.contribuyente} className={`step-button ${step === 2 ? 'active' : ''}`}>
           Paso 2: Parámetros
         </button>
-        <button onClick={() => setStep(3)} disabled={!configStatus.parametros} className={`py-2 px-4 ${step === 3 ? 'border-b-2 border-indigo-500 font-medium' : 'text-gray-500'} disabled:opacity-50`}>
+        <button onClick={() => setStep(3)} disabled={!configStatus.parametros} className={`step-button ${step === 3 ? 'active' : ''}`}>
           Paso 3: Catálogo
         </button>
       </div>
 
       {step === 1 && (
-        <form onSubmit={handleSavePerfil} className="bg-white shadow rounded-lg p-6">
+        <form onSubmit={handleSavePerfil} className="tax-form-container">
           <h2 className="font-semibold text-lg mb-4">Alta de Contribuyente</h2>
           <div className="grid grid-cols-2 gap-4">
             <input name="ruc" value={perfil.ruc} onChange={handlePerfilChange} className="border p-2 rounded" placeholder="RUC (11 dígitos)" required />
@@ -163,38 +164,38 @@ export default function TaxConfigPage() {
             </select>
             <input name="domicilio" value={perfil.domicilio} onChange={handlePerfilChange} className="border p-2 rounded" placeholder="Domicilio Fiscal" />
             <input name="cuentaBancaria" value={perfil.cuentaBancaria} onChange={handlePerfilChange} className="border p-2 rounded" placeholder="Cuenta Bancaria" />
-            <input name="representanteLegal" value={perfil.representanteLegal} onChange={handlePerfilChange} className="border p-2 rounded" placeholder="Representante Legal" />
+            <input name="representanteLegal" value={perfil.representanteLegal} onChange={handlePerfilChange} placeholder="Representante Legal" />
           </div>
-          <button type="submit" disabled={loading} className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded disabled:bg-gray-400">
+          <button type="submit" disabled={loading} className="btn-submit">
             {loading ? "Guardando..." : "Guardar y continuar (Paso 2)"}
           </button>
         </form>
       )}
 
       {step === 2 && (
-        <form onSubmit={handleSaveParams} className="bg-white shadow rounded-lg p-6">
-          <h2 className="font-semibold text-lg mb-4">Parámetros Tributarios Mínimos</h2>
-          <p className="text-sm text-gray-600 mb-4">Al guardar, se creará una nueva versión de los parámetros.</p>
-          <div className="grid grid-cols-2 gap-4">
-            <input type="number" step="0.01" name="tasaIgv" value={params.tasaIgv} onChange={handleParamsChange} className="border p-2 rounded" placeholder="Porcentaje IGV (ej: 18.0)" />
-            <input name="reglasRedondeo" value={params.reglasRedondeo} onChange={handleParamsChange} className="border p-2 rounded" placeholder="Reglas de Redondeo" />
-            <input name="formatoExportacion" value={params.formatoExportacion} onChange={handleParamsChange} className="border p-2 rounded" placeholder="Formato Exportación" />
+        <form onSubmit={handleSaveParams} className="tax-form-container">
+          <h2>Parámetros Tributarios Mínimos</h2>
+          <p>Al guardar, se creará una nueva versión de los parámetros.</p>
+          <div className="form-grid">
+            <input type="number" step="0.01" name="tasaIgv" value={params.tasaIgv} onChange={handleParamsChange} placeholder="Porcentaje IGV (ej: 18.0)" />
+            <input name="reglasRedondeo" value={params.reglasRedondeo} onChange={handleParamsChange} placeholder="Reglas de Redondeo" />
+            <input name="formatoExportacion" value={params.formatoExportacion} onChange={handleParamsChange} placeholder="Formato Exportación" />
           </div>
-          <button type="submit" disabled={loading} className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded disabled:bg-gray-400">
+          <button type="submit" disabled={loading} className="btn-submit">
             {loading ? "Guardando..." : "Confirmar y continuar (Paso 3)"}
           </button>
         </form>
       )}
 
       {step === 3 && (
-        <form onSubmit={handleUploadCatalogo} className="bg-white shadow rounded-lg p-6">
-          <h2 className="font-semibold text-lg mb-4">Carga de Catálogo de Productos/Servicios</h2>
-          <p className="text-sm text-gray-600 mb-4">Productos actuales en BD: <strong>{configStatus.cantidadProductos}</strong></p>
-          <input type="file" name="file" onChange={handleFileChange} className="mb-4" accept=".csv" />
-          <p className="text-sm text-gray-600 mb-4">
+        <form onSubmit={handleUploadCatalogo} className="tax-form-container">
+          <h2>Carga de Catálogo de Productos/Servicios</h2>
+          <p>Productos actuales en BD: <strong>{configStatus.cantidadProductos}</strong></p>
+          <input type="file" name="file" onChange={handleFileChange} accept=".csv" />
+          <p>
             Sube un archivo <code>CatalogoCarga.csv</code> (Campos: codigo, descripcion, precio_unitario, afectacion_igv).
           </p>
-          <button type="submit" disabled={loading} className="px-4 py-2 bg-green-600 text-white rounded disabled:bg-gray-400">
+          <button type="submit" disabled={loading} className="btn-submit green">
             {loading ? "Validando y Guardando..." : "Validar y Activar Perfil"}
           </button>
         </form>

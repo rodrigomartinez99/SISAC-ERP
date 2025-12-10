@@ -96,34 +96,28 @@ const getNavigationByRole = (role) => {
           permission: 'view_dashboard'
         },
         { 
-          name: 'Gestión Convocatorias', 
+          name: 'Convocatorias', 
           path: '/hiring/convocatorias', 
           icon: '📢',
           permission: 'manage_job_postings'
         },
         { 
-          name: 'Postulantes', 
-          path: '/hiring/candidates', 
+          name: 'Candidatos', 
+          path: '/hiring/candidatos', 
           icon: '👥',
           permission: 'manage_candidates'
         },
         { 
+          name: 'Postulaciones', 
+          path: '/hiring/postulaciones', 
+          icon: '📝',
+          permission: 'manage_candidates'
+        },
+        { 
           name: 'Entrevistas', 
-          path: '/hiring/interviews', 
+          path: '/hiring/entrevistas', 
           icon: '💬',
           permission: 'manage_interviews'
-        },
-        { 
-          name: 'Empleados', 
-          path: '/hiring/employees', 
-          icon: '👤',
-          permission: 'manage_employees'
-        },
-        { 
-          name: 'Reportes', 
-          path: '/hiring/reports', 
-          icon: '📈',
-          permission: 'view_hiring_reports'
         }
       ];
     
