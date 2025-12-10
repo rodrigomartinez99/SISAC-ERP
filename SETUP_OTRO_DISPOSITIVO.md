@@ -4,185 +4,212 @@
 
 ---
 
-## ⚠️ IMPORTANTE: Este Setup Funciona en Dispositivo Original
+## ⚠️ IMPORTANTE: Base de Datos Exportada Lista
 
-Este proyecto está **FUNCIONANDO** en el dispositivo original con esta configuración exacta.
-El objetivo es **replicar el mismo estado** en otro dispositivo **SIN Flyway automático**.
+Este proyecto está **FUNCIONANDO** en el dispositivo original.
+Se generó un archivo SQL con **toda la base de datos funcional**.
 
----
-
-## 🚫 POR QUÉ FLYWAY NO FUNCIONA EN DISPOSITIVO NUEVO
-
-Las migraciones V1-V4 **NO fueron diseñadas para crear BD desde cero**. Fueron creadas para documentar una BD que ya existía manualmente.
-
-### Errores que aparecen:
-1. **V2 falla**: Intenta eliminar Foreign Keys que no existen
-2. **V4 falla**: Intenta renombrar columnas que ya tienen el nombre correcto
-
-### Por qué funciona aquí:
-- La BD se creó manualmente ANTES de las migraciones
-- Flyway solo "documentó" los cambios
-- El historial de Flyway está marcado como ejecutado pero nunca realmente ejecutó desde cero
+**Archivo generado**: `sisac_db_completo_20251210_135130.sql`
+**Ubicación**: `backend/sisac_db_completo_20251210_135130.sql`
 
 ---
 
-## ✅ SOLUCIÓN: Importar BD Completa (NO usar migraciones)
+## 📋 PASOS PARA EL NUEVO DISPOSITIVO
 
-### Paso 1: En Dispositivo Original (Este)
+### ✅ Paso 1: Obtener el archivo de la base de datos
 
-```bash
-# Hacer dump completo de la base de datos funcionando
-mysqldump -u root -p sisac_db > sisac_db_completo.sql
+**YA ESTÁ LISTO** en el repositorio:
+- Archivo: `backend/sisac_db_completo_20251210_135130.sql`
+- Contiene: Toda la estructura + datos + tablas del módulo convocatorias
 
-# Hacer dump solo de estructura (sin datos)
-mysqldump -u root -p --no-data sisac_db > sisac_db_estructura.sql
+**Después de clonar el repo**, este archivo ya estará disponible.
+
+---
+
+### ✅ Paso 2: Clonar/Actualizar el Repositorio
+
+```powershell
+cd "ruta\donde\quieres\el\proyecto"
+git clone https://github.com/rodrigomartinez99/SISAC-ERP.git
+cd SISAC-ERP
+git checkout Rodrigo
+git pull origin Rodrigo
 ```
 
-### Paso 2: Copiar archivos al Nuevo Dispositivo
+---
 
-Copiar estos archivos:
-- `sisac_db_completo.sql` (con datos)
-- O `sisac_db_estructura.sql` (solo estructura)
+### ✅ Paso 3: Importar la Base de Datos
 
-### Paso 3: En Dispositivo Nuevo
+1. **Abre PowerShell como Administrador**
 
-```bash
-# 1. Crear base de datos
-mysql -u root -p -e "CREATE DATABASE sisac_db CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;"
-
-# 2. Importar dump
-mysql -u root -p sisac_db < sisac_db_completo.sql
-
-# 3. DESHABILITAR Flyway temporalmente
+2. **Navega al directorio backend**:
+```powershell
+cd SISAC-ERP\backend
 ```
 
-Editar `backend/maven-demo/src/main/resources/application.properties`:
+3. **Importa la base de datos**:
+```powershell
+& "C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe" -u root -p < sisac_db_completo_20251210_135130.sql
+```
+*Te pedirá el password de MySQL - ingrésalo*
+
+4. **Verifica que se importó correctamente**:
+```powershell
+& "C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe" -u root -p sisac_db -e "SHOW TABLES;"
+```
+
+**Deberías ver estas tablas importantes**:
+- ✅ `convocatoria` (singular)
+- ✅ `entrevistas` (plural)
+- ✅ `candidato`
+- ✅ `postulacion`
+- ✅ `empleados`
+- ✅ `planillas`
+- Y todas las demás...
+
+---
+
+### ✅ Paso 4: Configurar application.properties
+
+Edita: `backend/maven-demo/src/main/resources/application.properties`
+
+**Cambia SOLO el password de MySQL** a tu password local:
+
 ```properties
-# DESACTIVAR Flyway (la BD ya está completa)
+spring.datasource.password=TU_PASSWORD_MYSQL_AQUI
+```
+
+**CRÍTICO**: Verifica que Flyway esté **DESHABILITADO**:
+
+```properties
 spring.flyway.enabled=false
 ```
 
-```bash
-# 4. Iniciar backend
-cd backend/maven-demo
+*(Si está en `true`, cámbialo a `false`)*
+
+---
+
+### ✅ Paso 5: Iniciar el Backend
+
+```powershell
+cd backend\maven-demo
+.\mvnw.cmd clean install
 .\mvnw.cmd spring-boot:run
 ```
 
----
-
-## 📊 Alternativa: Marcar Migraciones como Ejecutadas
-
-Si quieres mantener Flyway habilitado (pero sin ejecutar nada):
-
-### Paso 1: Importar BD
-```bash
-mysql -u root -p sisac_db < sisac_db_completo.sql
-```
-
-### Paso 2: Crear Tabla de Historial de Flyway (manualmente)
-
-```sql
-USE sisac_db;
-
--- Crear tabla de historial si no existe
-CREATE TABLE IF NOT EXISTS flyway_schema_history (
-    installed_rank INT NOT NULL,
-    version VARCHAR(50),
-    description VARCHAR(200) NOT NULL,
-    type VARCHAR(20) NOT NULL,
-    script VARCHAR(1000) NOT NULL,
-    checksum INT,
-    installed_by VARCHAR(100) NOT NULL,
-    installed_on TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    execution_time INT NOT NULL,
-    success BOOLEAN NOT NULL,
-    PRIMARY KEY (installed_rank)
-);
-
--- Marcar migraciones como ya ejecutadas
-INSERT INTO flyway_schema_history (installed_rank, version, description, type, script, checksum, installed_by, execution_time, success) VALUES
-(1, '1', 'create initial schema', 'SQL', 'V1__create_initial_schema.sql', NULL, 'root', 0, 1),
-(2, '2', 'fix int to bigint primary keys', 'SQL', 'V2__fix_int_to_bigint_primary_keys.sql', NULL, 'root', 0, 1),
-(3, '3', 'standardize remaining primary keys', 'SQL', 'V3__standardize_remaining_primary_keys.sql', NULL, 'root', 0, 1),
-(4, '4', 'complete snake case standardization', 'SQL', 'V4__complete_snake_case_standardization.sql', NULL, 'root', 0, 1);
-```
-
-### Paso 3: Mantener Flyway Habilitado
-
-En `application.properties`:
-```properties
-spring.flyway.enabled=true
-spring.flyway.baseline-on-migrate=true
-```
-
-### Paso 4: Iniciar Backend
-```bash
-cd backend/maven-demo
-.\mvnw.cmd spring-boot:run
-```
-
-Flyway detectará que las migraciones ya están "ejecutadas" y no intentará ejecutarlas de nuevo.
+**Debería iniciar SIN ERRORES** en: http://localhost:8081
 
 ---
 
-## 🎯 RESUMEN
+### ✅ Paso 6: Iniciar el Frontend
 
-| Método | Pros | Contras |
-|--------|------|---------|
-| **Importar BD + Flyway OFF** | ✅ Simple<br>✅ Sin errores<br>✅ Rápido | ⚠️ Flyway deshabilitado |
-| **Importar BD + Marcar historial** | ✅ Flyway habilitado<br>✅ Sin errores | ⚠️ Requiere SQL manual |
-| **Ejecutar migraciones** | ❌ NO FUNCIONA | ❌ V2 y V4 fallan |
+Abre **otra terminal PowerShell**:
 
----
-
-## 📝 Archivos Necesarios para Otro Dispositivo
-
-1. ✅ Código fuente (git clone)
-2. ✅ Dump de BD (`sisac_db_completo.sql` o `sisac_db_estructura.sql`)
-3. ✅ Este archivo de instrucciones
-4. ⚠️ **NO** intentar usar Flyway para crear BD desde cero
-
----
-
-## 🔧 Configuración de Flyway en Este Commit
-
-```properties
-spring.flyway.enabled=true
-spring.flyway.baseline-on-migrate=true
-spring.flyway.locations=classpath:db/migration
-spring.flyway.validate-on-migrate=false
+```powershell
+cd SISAC-ERP\frontend
+npm install
+npm run dev
 ```
 
-Pero recuerda: **Flyway está habilitado porque la BD ya existía antes**. En dispositivo nuevo, desactívalo o marca el historial manualmente.
+**Debería iniciar** en: http://localhost:5173
 
 ---
 
-## ✅ Verificación Post-Setup
+## ✅ Verificación Final
 
-Después de importar la BD, verificar:
+Si todo está correcto:
 
-```bash
-# Ver tablas creadas
-mysql -u root -p sisac_db -e "SHOW TABLES;"
+- ✅ Backend corriendo en: http://localhost:8081
+- ✅ Frontend corriendo en: http://localhost:5173
+- ✅ Base de datos con 32 tablas importadas
+- ✅ **Sin errores** de "Table doesn't exist"
+- ✅ **Sin errores** de "Unknown column"
 
-# Ver módulo convocatorias
-mysql -u root -p sisac_db -e "SELECT * FROM convocatoria LIMIT 1;"
+---
 
-# Ver historial Flyway (si está habilitado)
-mysql -u root -p sisac_db -e "SELECT * FROM flyway_schema_history;"
+## 🔧 Solución de Problemas
+
+### ❌ Error: "Table 'sisac_db.convocatoria' doesn't exist"
+
+**Causa**: La base de datos no se importó o Flyway está habilitado y causó conflictos.
+
+**Solución**:
+1. Verifica que Flyway esté deshabilitado: `spring.flyway.enabled=false` en `application.properties`
+2. Reimporta la base de datos:
+```powershell
+& "C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe" -u root -p -e "DROP DATABASE IF EXISTS sisac_db;"
+& "C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe" -u root -p < sisac_db_completo_20251210_135130.sql
 ```
 
 ---
 
-## 📞 Soporte
+### ❌ Error: "Access denied for user 'root'@'localhost'"
 
-Si tienes problemas:
-1. Verifica que importaste el dump completo
-2. Verifica que MySQL está corriendo
-3. Verifica las credenciales en `application.properties`
-4. Si Flyway da problemas, desactívalo con `spring.flyway.enabled=false`
+**Causa**: Password incorrecto en `application.properties`
+
+**Solución**:
+- Edita `backend/maven-demo/src/main/resources/application.properties`
+- Cambia `spring.datasource.password=` a tu password real de MySQL
 
 ---
 
-**Última actualización**: 10 Diciembre 2025  
-**Commit funcional**: 371a98c
+### ❌ Error: "Unknown column 'e1_0.id' in 'field list'"
+
+**Causa**: La estructura de la base de datos no coincide con las entidades Java.
+
+**Solución**:
+1. Asegúrate de estar usando el archivo SQL correcto: `sisac_db_completo_20251210_135130.sql`
+2. Verifica que el código esté en el commit correcto: `git log --oneline -1` debe mostrar `371a98c`
+3. Reimporta la base de datos
+
+---
+
+### ❌ Error: "Could not create connection to database server"
+
+**Causa**: MySQL no está corriendo o la URL es incorrecta.
+
+**Solución**:
+1. Verifica que MySQL esté corriendo:
+```powershell
+Get-Service MySQL80
+```
+2. Si está detenido, inícialo:
+```powershell
+Start-Service MySQL80
+```
+
+---
+
+## 📝 Notas Importantes
+
+- ✅ **La base de datos exportada contiene TODO**: estructura + datos + módulo convocatorias
+- ✅ **NO ejecutes las migraciones de Flyway** - Deshabilítalo siempre
+- ✅ **El archivo SQL corresponde al commit actual** (371a98c)
+- ✅ **Incluye 32 tablas** completas y funcionales
+- ✅ **La importación toma solo unos segundos** (archivo de 0.08 MB)
+
+---
+
+## 🚫 NO USAR FLYWAY
+
+Las migraciones V1-V4 fueron diseñadas para **documentar** una BD existente, NO para crearla desde cero.
+
+**Problemas si habilitas Flyway**:
+- V2 falla: Intenta eliminar Foreign Keys inexistentes
+- V4 falla: Intenta renombrar columnas que ya están correctas
+- Conflictos con tablas existentes
+
+**SIEMPRE mantener**: `spring.flyway.enabled=false`
+
+---
+
+## 📞 Contacto
+
+Si tienes problemas siguiendo estos pasos, verifica:
+1. El archivo SQL esté en `backend/sisac_db_completo_20251210_135130.sql`
+2. MySQL 8.0 esté instalado y corriendo
+3. Java 21 esté instalado
+4. Node.js esté instalado
+
+**Fecha de última actualización**: 10 Diciembre 2025
+**Versión del dump**: sisac_db_completo_20251210_135130.sql
