@@ -22,11 +22,30 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
+        // --- INICIO CÓDIGO NUEVO ---
+        if ("admin@sisac.com".equals(email)) {
+            System.out.println("--> Acceso detectado para SUPER ADMIN hardcodeado");
+
+            Collection<GrantedAuthority> authorities = new ArrayList<>();
+            authorities.add(new SimpleGrantedAuthority("ROLE_SUPER_ADMIN"));
+
+            return new User(
+                    "admin@sisac.com",
+                    "$2a$10$DUMMYHASHFORSECURITYBYPASS", // Hash dummy
+                    true,  // enabled
+                    true,  // accountNonExpired
+                    true,  // credentialsNonExpired
+                    true,  // accountNonLocked
+                    authorities
+            );
+        }
+
         System.out.println("--> Buscando usuario por email: " + email);
-        
+
         UsuarioAdmin usuario = usuarioAdminRepository.findByEmailAndActivoTrue(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + email));
-        
+
         System.out.println("--> Usuario encontrado: " + usuario.getEmail() + ", Activo: " + usuario.getActivo());
         System.out.println("--> Password hash en DB: " + usuario.getPasswordHash());
 

@@ -57,6 +57,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(authz -> authz
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/public/**").permitAll()
+                .requestMatchers("/api/users/**").hasRole("SUPER_ADMIN")
                 
                 // --- Reglas de Negocio por Rol ---
                 
@@ -77,6 +78,9 @@ public class SecurityConfig {
                 .requestMatchers("/api/candidatos/**").hasRole("GESTOR_CONTRATACION")
                 .requestMatchers("/api/postulaciones/**").hasRole("GESTOR_CONTRATACION")
                 .requestMatchers("/api/entrevistas/**").hasRole("GESTOR_CONTRATACION")
+                
+                .requestMatchers("/actuator/**").permitAll()
+                .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/tax/closing/descargar/**").hasRole("ADMIN_TRIBUTARIO")
                 
                 // ---------------------------------
 
