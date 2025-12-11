@@ -26,4 +26,11 @@ export default defineConfig({
       '@tax': path.resolve(__dirname, './src/features/tax'),
     },
   },
+  server: {
+    host: '0.0.0.0',
+    port: 5173,
+    watch: {
+      usePolling: true,
+    },
+  },
 });

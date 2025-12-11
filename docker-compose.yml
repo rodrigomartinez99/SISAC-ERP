@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  # Base de Datos MySQL
+  mysql:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.mysql
+    container_name: sisac-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: sisac_db
+      MYSQL_USER: sisac_user
+      MYSQL_PASSWORD: sisac_pass
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - sisac-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-padmin"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend Spring Boot
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: sisac-backend
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/sisac_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: admin
+      SPRING_FLYWAY_ENABLED: false
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - sisac-network
+    restart: on-failure
+
+  # Frontend React (opcional, para desarrollo)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: sisac-frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - sisac-network
+    depends_on:
+      - backend
+
+networks:
+  sisac-network:
+    driver: bridge
+
+volumes:
+  mysql_data:

@@ -1,0 +1,14 @@
+# Configuración de Desarrollo MySQL
+FROM mysql:8.0
+
+# Variables de entorno
+ENV MYSQL_ROOT_PASSWORD=admin
+ENV MYSQL_DATABASE=sisac_db
+ENV MYSQL_USER=sisac_user
+ENV MYSQL_PASSWORD=sisac_pass
+
+# Copiar script de inicialización
+COPY sisac_db_completo_20251210_135130.sql /docker-entrypoint-initdb.d/
+
+# Exponer puerto
+EXPOSE 3306

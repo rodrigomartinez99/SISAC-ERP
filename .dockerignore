@@ -1,0 +1,27 @@
+# Archivos a ignorar en Docker builds
+.git
+.gitignore
+README.md
+*.md
+
+# Archivos de desarrollo
+.vscode
+.idea
+*.log
+
+# Archivos de Maven
+maven-demo/target
+maven-demo/.mvn/wrapper/maven-wrapper.jar
+
+# Archivos de Node
+frontend/node_modules
+frontend/dist
+frontend/.vite
+
+# Archivos de base de datos
+*.sql
+
+# Archivos temporales
+*.tmp
+*.bak
+*.swp
